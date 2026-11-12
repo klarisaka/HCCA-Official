@@ -1,0 +1,77 @@
+[English](README.md) | **简体中文**
+
+# HCCA Official
+
+HCCA Official 0.2.1 把阅读、执行和重试放进独立上下文，减少主 Agent 的输入，并复用稳定的提示词前缀。
+
+## 如何工作
+
+Root 负责规划与整合。每次委派都开启独立上下文，复用共享角色提示词，工具输出和重试历史保留在对应 worker 内。
+
+```mermaid
+flowchart LR
+    U["用户"] --> R["Root"]
+    R --> A["阅读 Agent"]
+    R --> B["执行 Agent"]
+    R --> C["分析 Agent"]
+    A --> S["简洁结果与证据"]
+    B --> S
+    C --> S
+    S --> R
+```
+
+| 用法 | 谁负责规划 | 从哪里开始 |
+| --- | --- | --- |
+| DSH 插件 | DSH 聊天直接作为 Root | 安装插件，在 DSH 中选择 HCCA |
+| 独立运行 | HCCA 自身作为 Root | 使用下面的命令 |
+
+## 历史基准结果
+
+历史 SWE-bench Verified Mini，全部 50 题均经过官方评测器评分。
+
+| 冻结版本 | 通过题数 | 归一费用 |
+| --- | --- | --- |
+| **HCCA v6** · 直接执行 Agent · low | **38/50（76%）** | **$0.739** |
+| DSH 极简 · high | 35/50（70%） | ≥ $3.062 |
+
+HCCA 使用 DeepSeek 官方接口，DSH 使用 GXWTF，费用统一按谷价归一。DSH 有一条用量记录不完整，因此费用为下界。[配置与计费明细](https://github.com/klarisaka/HCCA/blob/d337069fa8b81851d2086482992edd560244f4b6/reports/verified50-hcca-v6-vs-dsh-summary.json)。
+
+## 在 DSH 中使用
+
+准备 Python 3.11+、DSH CLI 和 pnpm。在完整仓库中安装：
+
+```sh
+git clone https://github.com/klarisaka/HCCA-Official.git
+cd HCCA-Official
+python integrations/dsh-hcca/install.py --profile web
+```
+
+桌面版将 `web` 改为 `desktop`。按[模型连接说明](docs/USAGE.zh-CN.md#模型连接)配置 HCCA worker 的模型，重启 DSH，新建会话并选择 **HCCA**。
+
+在聊天中提出任务，Root 会按需派发阅读、执行或分析；执行 Agent 可以根据失败结果自行调整并重试。**HCCA 选项卡**显示子任务进度、token 用量、缓存命中率和结果。
+
+执行中可直接在聊天里补充要求。Root 先判断影响范围，再逐层调整相关子任务。
+
+## 独立运行
+
+配置好[模型连接](docs/USAGE.zh-CN.md#模型连接)后，在仓库根目录运行，替换工作区路径：
+
+```sh
+python -m hcca.runner --goal "完成你的任务" --workspace "/path/to/project" --out "./runs/example"
+```
+
+查看本次运行的面板：
+
+```sh
+python -m hcca.dsh_worker --runs "./runs" --port 8765
+```
+
+打开 <http://127.0.0.1:8765/>，选择 `example` 运行。
+
+## 更多
+
+[使用与配置](docs/USAGE.zh-CN.md) · [DSH 集成](integrations/dsh-hcca/README.zh-CN.md) · [架构设计](docs/ARCHITECTURE.zh-CN.md) · [基准工具](benchmarks/README.md) · [历史实验](docs/USAGE.zh-CN.md#历史实验)
+
+## 开源协议
+
+HCCA 自有代码采用 [AGPL-3.0-only](LICENSE)。第三方材料见[来源与授权说明](THIRD_PARTY_NOTICES.md)。

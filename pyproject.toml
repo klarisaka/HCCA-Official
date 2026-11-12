@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hcca"
+version = "0.2.1"
+description = "Independent-context reader, executor, and analyst workers for agent collaboration"
+requires-python = ">=3.11"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+hcca = "hcca.runner:main"
+hcca-sidecar = "hcca.dsh_worker:main"
+
+[project.urls]
+Repository = "https://github.com/klarisaka/HCCA-Official"
+
+[tool.setuptools.packages.find]
+include = ["hcca"]
+
+[tool.setuptools.package-data]
+hcca = ["prompts/*.md", "dsh_ui.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "integrations/dsh-hcca/tests"]
+addopts = "-q"
