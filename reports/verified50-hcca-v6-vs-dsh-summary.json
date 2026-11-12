@@ -1,0 +1,110 @@
+{
+  "schema": "hcca.verified50.public-summary.v2",
+  "published_date": "2026-11-12",
+  "status": "historical_frozen_comparison",
+  "benchmark": {
+    "name": "SWE-bench Verified Mini",
+    "evaluation_denominator": 50,
+    "evaluator": "official SWE-bench evaluator",
+    "task_manifest_sha256": "bd053c000d5051f5a42c246de8d2f62e04660ef6b53991ae3d60a6f65b8a10e1",
+    "network_policy": "given repository and issue only"
+  },
+  "pricing": {
+    "basis": "common DeepSeek Flash off-peak normalization",
+    "source_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "currency": "USD",
+    "token_unit": 1000000,
+    "per_1m_tokens_usd": {
+      "cached": "0.003",
+      "uncached": "0.15",
+      "output": "0.60"
+    },
+    "output_tokens_include_reasoning": true,
+    "actual_provider_billed_cost_usd": null
+  },
+  "arms": [
+    {
+      "name": "HCCA frozen v6",
+      "phase_id": "repo-only-hcca-official50-v6",
+      "provider": "DeepSeek official",
+      "model_alias": "deepseek-flash",
+      "case_concurrency": 8,
+      "entry_point": "frozen standalone code runner with force_mode=solo",
+      "planning_before_execution": false,
+      "configured_role_reasoning_effort": {
+        "thinking": "high",
+        "executor": "low",
+        "reader": "low"
+      },
+      "observed_http_reasoning_effort_counts": {
+        "low": 1380
+      },
+      "executor_context_budget_tokens": 524288,
+      "executor_round_limit": null,
+      "shared_call_limit": null,
+      "active_wall_per_case_s": 4800,
+      "output_cap_fields": [],
+      "progress": {
+        "generated": 50,
+        "evaluated": 50,
+        "resolved": 38
+      },
+      "actual_http_requests": 1380,
+      "complete_usage_requests": 1380,
+      "incomplete_usage_requests": 0,
+      "http_status_counts": {
+        "200": 1380
+      },
+      "tokens": {
+        "input": 41540145,
+        "cached": 40515072,
+        "uncached": 1025073,
+        "output": 772335,
+        "reasoning_within_output": 491484
+      },
+      "normalized_cost_usd": "0.738707166",
+      "cost_scope": "One complete frozen-v6 full50 run, including failed attempts, retries, and same-case continuations. Earlier development versions are recorded separately."
+    },
+    {
+      "name": "DSH minimal high frozen baseline",
+      "phase_id": "repo-only-dsh50",
+      "provider": "GXWTF",
+      "model": "deepseek-v4.1-flash",
+      "profile": "sdk-minimal",
+      "reasoning_effort": "high",
+      "case_concurrency": 2,
+      "output_cap_fields": [],
+      "progress": {
+        "generated": 50,
+        "evaluated": 50,
+        "resolved": 35
+      },
+      "actual_http_requests": 2014,
+      "incomplete_usage_requests": 1,
+      "known_complete_tokens": {
+        "input": 106265446,
+        "cached": 104137856,
+        "uncached": 2127590,
+        "output": 4050837
+      },
+      "normalized_cost_usd": null,
+      "known_complete_lower_bound_usd": "3.062054268",
+      "cost_scope": "The unchanged frozen full50 comparator. One partial usage record leaves its exact total unknown.",
+      "public_source": "verified50-hcca-v7-vs-dsh-2026-11-12-summary.json",
+      "historical_source_identifier": "verified50-hcca-v2-vs-dsh-summary.json",
+      "public_source_section": "dsh_baseline_usage"
+    }
+  ],
+  "verification": {
+    "method": "Read-only rerun of the independent sealed-evidence audit, including file hashes, HTTP usage reconciliation, and official evaluation reports",
+    "sealed_manifest_files_verified": 687,
+    "official_reports_verified": 50,
+    "terminal_export_manifest_sha256": "c12cff1ed4e9520358dd4e07b90c6eef50a83605bb9fd42280a2c0f6e33d7271",
+    "frozen_source_manifest_sha256": "e8fe871c2fa2ee3a17e23daa14bd615ca51882b7422dda338ad971728f672107",
+    "frozen_plan_sha256": "853722e65399e5d8eb3d6e8160a1c1580f29bad76c4f65a1e8c05a08c760ef50",
+    "frozen_dsh_calibration_sha256": "60f7f098097d968e5dee3e1c890d7e9169a14ea38c1d7977d0327861010a0975",
+    "root_independent_audit_filename": "official50-v6-root-independent-terminal-audit.json",
+    "root_independent_audit_sha256": "a35f27f8882ea80fd00613c7062077da1c561fd08bacdf86c383c7eb4565daac",
+    "provider_requests_for_verification": 0
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "schema": "hcca.verified50.publication-source-inventory.v1",
+  "phase_id": "repo-only-hcca-v7-gxwtf-20261112",
+  "frozen_runtime_manifest": {
+    "identifier": "hcca-source-official50-v7.json",
+    "sha256": "31b32e1e9007889691180b79ea876d98a3f9665764176066fd4adbf1204f0f07",
+    "bytes": 30870
+  },
+  "runtime_file_count": 41,
+  "runtime_files": [
+    {
+      "path": "bench/multiagent/run_generic.py",
+      "expected_sha256": "6bcfb74028c2902c4db3f2ae2f1721b67d98021604df6f5c1b03f2b78bc31e6b",
+      "actual_sha256": "6bcfb74028c2902c4db3f2ae2f1721b67d98021604df6f5c1b03f2b78bc31e6b",
+      "matches": true
+    },
+    {
+      "path": "hcca/__init__.py",
+      "expected_sha256": "08f026d0b04a1f78f2fbbaf66c02ac438031a02e5c8505bea58a587ab5eee04f",
+      "actual_sha256": "08f026d0b04a1f78f2fbbaf66c02ac438031a02e5c8505bea58a587ab5eee04f",
+      "matches": true
+    },
+    {
+      "path": "hcca/agent_tools.py",
+      "expected_sha256": "ae8636ee5ee9fe74b1b6902e6ee77f0f4a870b841721ea22abca5f1d8348f0ff",
+      "actual_sha256": "ae8636ee5ee9fe74b1b6902e6ee77f0f4a870b841721ea22abca5f1d8348f0ff",
+      "matches": true
+    },
+    {
+      "path": "hcca/agents.py",
+      "expected_sha256": "8fbfa36e7fdfb7a6a4de285c8be07daf551c498390bac91f3871a1b9b8f17bf0",
+      "actual_sha256": "8fbfa36e7fdfb7a6a4de285c8be07daf551c498390bac91f3871a1b9b8f17bf0",
+      "matches": true
+    },
+    {
+      "path": "hcca/artifacts.py",
+      "expected_sha256": "2b6c364619c8276f4e39208177e0b4fde1b9f754b859585e3a456e46bdc2c477",
+      "actual_sha256": "2b6c364619c8276f4e39208177e0b4fde1b9f754b859585e3a456e46bdc2c477",
+      "matches": true
+    },
+    {
+      "path": "hcca/cli.py",
+      "expected_sha256": "7a8f8e810489ad677953b3eb5c1ee2c411e83b28a7e959e3a3d9f60ec3a4eddf",
+      "actual_sha256": "7a8f8e810489ad677953b3eb5c1ee2c411e83b28a7e959e3a3d9f60ec3a4eddf",
+      "matches": true
+    },
+    {
+      "path": "hcca/coldstart.py",
+      "expected_sha256": "1bbe95b53c733c448b50e0367bb45b5a5ecd637cda86f731959b1b80b2301260",
+      "actual_sha256": "1bbe95b53c733c448b50e0367bb45b5a5ecd637cda86f731959b1b80b2301260",
+      "matches": true
+    },
+    {
+      "path": "hcca/collab_runtime.py",
+      "expected_sha256": "50a21f36dfa4b34976c165b242b3f8f28bda004a71eacf5d91e9eddcee98a0ee",
+      "actual_sha256": "50a21f36dfa4b34976c165b242b3f8f28bda004a71eacf5d91e9eddcee98a0ee",
+      "matches": true
+    },
+    {
+      "path": "hcca/collab_types.py",
+      "expected_sha256": "2617114711899426edf70e87d6e7d2093bc5b570632c03d81b3e20a895465eb5",
+      "actual_sha256": "2617114711899426edf70e87d6e7d2093bc5b570632c03d81b3e20a895465eb5",
+      "matches": true
+    },
+    {
+      "path": "hcca/collaboration.py",
+      "expected_sha256": "a2b115c17ac174305d90f5545f30c21932e7459b5fb02343d5d41b5a8ae7ee9f",
+      "actual_sha256": "a2b115c17ac174305d90f5545f30c21932e7459b5fb02343d5d41b5a8ae7ee9f",
+      "matches": true
+    },
+    {
+      "path": "hcca/context_spec.py",
+      "expected_sha256": "af77a4c2cc8546f13da8bd19d9489cf36e1177855573e01ba6b7a730a1fbd8df",
+      "actual_sha256": "af77a4c2cc8546f13da8bd19d9489cf36e1177855573e01ba6b7a730a1fbd8df",
+      "matches": true
+    },
+    {
+      "path": "hcca/contracts.py",
+      "expected_sha256": "dafc85d50b7e8aefb96af27326c39c89d8355c32603b2ebf37186592d6ece6f8",
+      "actual_sha256": "dafc85d50b7e8aefb96af27326c39c89d8355c32603b2ebf37186592d6ece6f8",
+      "matches": true
+    },
+    {
+      "path": "hcca/dag.py",
+      "expected_sha256": "9f64cf85dc1b734a22645d45ef000e3ea73a40292e0210617a955e03bb27b9bf",
+      "actual_sha256": "9f64cf85dc1b734a22645d45ef000e3ea73a40292e0210617a955e03bb27b9bf",
+      "matches": true
+    },
+    {
+      "path": "hcca/dsh_worker.py",
+      "expected_sha256": "8758294bf360fc09fc5a848fdb10cc4054abfc9c13efec609893956e0c0a463a",
+      "actual_sha256": "8758294bf360fc09fc5a848fdb10cc4054abfc9c13efec609893956e0c0a463a",
+      "matches": true
+    },
+    {
+      "path": "hcca/errors.py",
+      "expected_sha256": "9126e9095dfc7bd4eaf4b1fd74ccbccc59f9bdee2bdb609ec240f009e5349a97",
+      "actual_sha256": "9126e9095dfc7bd4eaf4b1fd74ccbccc59f9bdee2bdb609ec240f009e5349a97",
+      "matches": true
+    },
+    {
+      "path": "hcca/execution.py",
+      "expected_sha256": "fd187c8da493d1ef9243c785c7cd0ee7c6c864d2df10fbdd37980a0a5d4d768d",
+      "actual_sha256": "fd187c8da493d1ef9243c785c7cd0ee7c6c864d2df10fbdd37980a0a5d4d768d",
+      "matches": true
+    },
+    {
+      "path": "hcca/execution_environment.py",
+      "expected_sha256": "9a6884e7cf3f3856a62eee55bb187f063bee845d5dcc9afaffd7aeb1e5981c16",
+      "actual_sha256": "9a6884e7cf3f3856a62eee55bb187f063bee845d5dcc9afaffd7aeb1e5981c16",
+      "matches": true
+    },
+    {
+      "path": "hcca/execution_resume.py",
+      "expected_sha256": "0d2e3de625bb59222f8c4191c873259591abf2ea286dc62bf978c0f2033ed6cc",
+      "actual_sha256": "0d2e3de625bb59222f8c4191c873259591abf2ea286dc62bf978c0f2033ed6cc",
+      "matches": true
+    },
+    {
+      "path": "hcca/gateway.py",
+      "expected_sha256": "0cce5e8575327d41de403f3407192254bf636a5e287e719b2db9c99dc15e6426",
+      "actual_sha256": "0cce5e8575327d41de403f3407192254bf636a5e287e719b2db9c99dc15e6426",
+      "matches": true
+    },
+    {
+      "path": "hcca/hierarchy.py",
+      "expected_sha256": "ddd63923283158afbf0f946d5fde42013621ca634a487cb3e7f6892b9ae4a04c",
+      "actual_sha256": "ddd63923283158afbf0f946d5fde42013621ca634a487cb3e7f6892b9ae4a04c",
+      "matches": true
+    },
+    {
+      "path": "hcca/invariants.py",
+      "expected_sha256": "625a82759ef425bb6dddd27e06cdc8b8c9b4875e8e90db9bc011fbfb3005a29a",
+      "actual_sha256": "625a82759ef425bb6dddd27e06cdc8b8c9b4875e8e90db9bc011fbfb3005a29a",
+      "matches": true
+    },
+    {
+      "path": "hcca/llm.py",
+      "expected_sha256": "98d670c5f63e8a0fb7f742fdb890e32d6e4d829dd4a6489053232f0eac611d28",
+      "actual_sha256": "98d670c5f63e8a0fb7f742fdb890e32d6e4d829dd4a6489053232f0eac611d28",
+      "matches": true
+    },
+    {
+      "path": "hcca/memory.py",
+      "expected_sha256": "eddfc26bbb93bd4bebdb1ca235e2d7cb2caa0b7171a2e16a68e8a85a03c281cf",
+      "actual_sha256": "eddfc26bbb93bd4bebdb1ca235e2d7cb2caa0b7171a2e16a68e8a85a03c281cf",
+      "matches": true
+    },
+    {
+      "path": "hcca/orchestrator.py",
+      "expected_sha256": "91445f65f02846703549349c50c136e492d4d81a7c802a562dc84c3d26cbaea8",
+      "actual_sha256": "91445f65f02846703549349c50c136e492d4d81a7c802a562dc84c3d26cbaea8",
+      "matches": true
+    },
+    {
+      "path": "hcca/prompts/environment.linux.md",
+      "expected_sha256": "5287148452c0f9073f9c848a03a922c1fb9601496d8d53f0b898b97127c7ceef",
+      "actual_sha256": "5287148452c0f9073f9c848a03a922c1fb9601496d8d53f0b898b97127c7ceef",
+      "matches": true
+    },
+    {
+      "path": "hcca/prompts/environment.windows.md",
+      "expected_sha256": "9ae1a3c0a67cc820efaefcc4328dd14f033c22ca2ee3bf1e4f36c74d71299d98",
+      "actual_sha256": "9ae1a3c0a67cc820efaefcc4328dd14f033c22ca2ee3bf1e4f36c74d71299d98",
+      "matches": true
+    },
+    {
+      "path": "hcca/prompts/executor.md",
+      "expected_sha256": "bfe5adbb2ff2e229fac45489ef83d2e14e831ad92f6c989a7206ac320d2a643a",
+      "actual_sha256": "bfe5adbb2ff2e229fac45489ef83d2e14e831ad92f6c989a7206ac320d2a643a",
+      "matches": true
+    },
+    {
+      "path": "hcca/prompts/reader.md",
+      "expected_sha256": "6aa9e3aa41ee6217609800355bb562948370a521765ddcb311e91d6321d7fb75",
+      "actual_sha256": "6aa9e3aa41ee6217609800355bb562948370a521765ddcb311e91d6321d7fb75",
+      "matches": true
+    },
+    {
+      "path": "hcca/reading.py",
+      "expected_sha256": "cf7d07f07bfa3fbc871c22072bf6d19ad6950ee9854b512e850efcf10434f2f5",
+      "actual_sha256": "cf7d07f07bfa3fbc871c22072bf6d19ad6950ee9854b512e850efcf10434f2f5",
+      "matches": true
+    },
+    {
+      "path": "hcca/reporting.py",
+      "expected_sha256": "018a46730358672f6e9df2f4f9f257411d5ff63d24a4e9ef8cd99d5483d9ded2",
+      "actual_sha256": "018a46730358672f6e9df2f4f9f257411d5ff63d24a4e9ef8cd99d5483d9ded2",
+      "matches": true
+    },
+    {
+      "path": "hcca/request_budget.py",
+      "expected_sha256": "2546c5dca76a1bef18f875373947654786bf446e6c36756d84ae50b2bbb6a3c8",
+      "actual_sha256": "2546c5dca76a1bef18f875373947654786bf446e6c36756d84ae50b2bbb6a3c8",
+      "matches": true
+    },
+    {
+      "path": "hcca/router.py",
+      "expected_sha256": "0686f3d9d312d36ca0949a1870412d70a6c32f1405fb24237fe5d2a50ab0e479",
+      "actual_sha256": "0686f3d9d312d36ca0949a1870412d70a6c32f1405fb24237fe5d2a50ab0e479",
+      "matches": true
+    },
+    {
+      "path": "hcca/sandbox.py",
+      "expected_sha256": "535f0bc82c8b2ea1e108ae422ab98e52510499e4730346f31ce43628e755a1cb",
+      "actual_sha256": "535f0bc82c8b2ea1e108ae422ab98e52510499e4730346f31ce43628e755a1cb",
+      "matches": true
+    },
+    {
+      "path": "hcca/scheduler.py",
+      "expected_sha256": "0f990f5826a3b3ee44978a56585d1c2c2d94861dbf36447f6e31c41005ab23e1",
+      "actual_sha256": "0f990f5826a3b3ee44978a56585d1c2c2d94861dbf36447f6e31c41005ab23e1",
+      "matches": true
+    },
+    {
+      "path": "hcca/supervisor.py",
+      "expected_sha256": "5b6cb42480d2023a1d0dd1b45f71957fcb72490aafa0e06eb6d18bd637ad5021",
+      "actual_sha256": "5b6cb42480d2023a1d0dd1b45f71957fcb72490aafa0e06eb6d18bd637ad5021",
+      "matches": true
+    },
+    {
+      "path": "hcca/telemetry.py",
+      "expected_sha256": "37c593d721a7933955dd0c3e4f1a8d0569f9f89a8e28e99a3edf1511689d9825",
+      "actual_sha256": "37c593d721a7933955dd0c3e4f1a8d0569f9f89a8e28e99a3edf1511689d9825",
+      "matches": true
+    },
+    {
+      "path": "hcca/tokens.py",
+      "expected_sha256": "5167fb6b240bdba34368b20a2aee52158a4a274451ea406eb91443c2f44e7651",
+      "actual_sha256": "5167fb6b240bdba34368b20a2aee52158a4a274451ea406eb91443c2f44e7651",
+      "matches": true
+    },
+    {
+      "path": "hcca/types.py",
+      "expected_sha256": "0e74839e26da8ea7c2d5a71c2762aca460081f898ccda7cf2c8804bf98f37d11",
+      "actual_sha256": "0e74839e26da8ea7c2d5a71c2762aca460081f898ccda7cf2c8804bf98f37d11",
+      "matches": true
+    },
+    {
+      "path": "hcca/verifier.py",
+      "expected_sha256": "86c5e1822474ca355c8b5c2bd25a3e96f16226b86d44e7ec2054b502d4214aba",
+      "actual_sha256": "86c5e1822474ca355c8b5c2bd25a3e96f16226b86d44e7ec2054b502d4214aba",
+      "matches": true
+    },
+    {
+      "path": "hcca/working_set.py",
+      "expected_sha256": "62a0488e95f0497067ac6ad6872a31da18d1bbd5cfeb719036e973eccddfb4b0",
+      "actual_sha256": "62a0488e95f0497067ac6ad6872a31da18d1bbd5cfeb719036e973eccddfb4b0",
+      "matches": true
+    },
+    {
+      "path": "hcca/world.py",
+      "expected_sha256": "5b0f524c4e9657eb8f58b56b0c4ed4b38fd218d0a28ce251fe35dd6690de9a5a",
+      "actual_sha256": "5b0f524c4e9657eb8f58b56b0c4ed4b38fd218d0a28ce251fe35dd6690de9a5a",
+      "matches": true
+    }
+  ],
+  "frozen_ops_file_count": 10,
+  "frozen_ops_files": [
+    {
+      "name": "hcca_official50_v7_swebench.py",
+      "expected_sha256": "66a11c0e8250d82e45f811459a9f9c870fc123e12bb8ef3c85f1f70917cc23b2",
+      "actual_sha256": "66a11c0e8250d82e45f811459a9f9c870fc123e12bb8ef3c85f1f70917cc23b2",
+      "matches": true
+    },
+    {
+      "name": "hcca_official50_v7_probe.py",
+      "expected_sha256": "2db218ef4d0ee4737444ca886f96e82c0051f34fac25161cedcb0001cbc2dfe1",
+      "actual_sha256": "2db218ef4d0ee4737444ca886f96e82c0051f34fac25161cedcb0001cbc2dfe1",
+      "matches": true
+    },
+    {
+      "name": "run_hcca_official50_v7.py",
+      "expected_sha256": "88732990717f3c48426abcae6266e90394f89380e02241667ef0dc90a7ea2344",
+      "actual_sha256": "88732990717f3c48426abcae6266e90394f89380e02241667ef0dc90a7ea2344",
+      "matches": true
+    },
+    {
+      "name": "prepare_hcca_official50_v7.py",
+      "expected_sha256": "768e40d2e67cb80a5dec928dea8c15cc1f5c9407fad29ca5f38037f87f662bea",
+      "actual_sha256": "768e40d2e67cb80a5dec928dea8c15cc1f5c9407fad29ca5f38037f87f662bea",
+      "matches": true
+    },
+    {
+      "name": "pack_hcca_official50_v7.py",
+      "expected_sha256": "eef1ac16cb5da38cce3c9c2621ed295918008aa8849ad5c87909871b404dea4c",
+      "actual_sha256": "eef1ac16cb5da38cce3c9c2621ed295918008aa8849ad5c87909871b404dea4c",
+      "matches": true
+    },
+    {
+      "name": "launch_hcca_official50_v7.py",
+      "expected_sha256": "aa9223b0918191e522413bf7eca2f295eb924e118f801076b524adc55959a328",
+      "actual_sha256": "aa9223b0918191e522413bf7eca2f295eb924e118f801076b524adc55959a328",
+      "matches": true
+    },
+    {
+      "name": "harness_retry.py",
+      "expected_sha256": "62b2aaa6a4eded57f715227b593344da10a46e168fd75777c873fddb9717ea61",
+      "actual_sha256": "62b2aaa6a4eded57f715227b593344da10a46e168fd75777c873fddb9717ea61",
+      "matches": true
+    },
+    {
+      "name": "verify_harness_retry_zero_api.py",
+      "expected_sha256": "742c57514eb99e363841f4aa94d63c42d45d966bbf0c60c7424120d469e33bd8",
+      "actual_sha256": "742c57514eb99e363841f4aa94d63c42d45d966bbf0c60c7424120d469e33bd8",
+      "matches": true
+    },
+    {
+      "name": "repo_only_official_runtime.py",
+      "expected_sha256": "600830b2cc8fecd83da31cd4bb2f78de8232ecbc1d47e9632071e4b1fc03115b",
+      "actual_sha256": "600830b2cc8fecd83da31cd4bb2f78de8232ecbc1d47e9632071e4b1fc03115b",
+      "matches": true
+    },
+    {
+      "name": "repo_only_official_relay.py",
+      "expected_sha256": "19ccffa4e2a6adb9b2e294975ca1d229d8f3839d43f4e44851c7da55167db61f",
+      "actual_sha256": "19ccffa4e2a6adb9b2e294975ca1d229d8f3839d43f4e44851c7da55167db61f",
+      "matches": true
+    }
+  ],
+  "run_local_adapter_sources": [
+    {
+      "identifier": "ops/hcca_v7_gxwtf_swebench.py",
+      "sha256": "ea89bf23afffc0f6a19c03337d55a726ba3210ed94ec9482c4cd9d7da840beb8",
+      "bytes": 22443
+    },
+    {
+      "identifier": "ops/hcca_v7_gxwtf_probe.py",
+      "sha256": "b889fc95c72409ce30422d0c679abd4eba567f67a1d31c9674b628835adef724",
+      "bytes": 16399
+    },
+    {
+      "identifier": "ops/run_hcca_v7_gxwtf.py",
+      "sha256": "37b233d024804bb3df9ef9117a4fd8d8d1f53c1c56c62369ac9b2de0925d5ab1",
+      "bytes": 9717
+    },
+    {
+      "identifier": "ops/repo_only_v7_gxwtf_runtime.py",
+      "sha256": "8a112e202d627e780e446b82e50937a4c933691edb11247bbab58eb9804168cb",
+      "bytes": 2359
+    },
+    {
+      "identifier": "ops/repo_only_v7_gxwtf_relay.py",
+      "sha256": "37d9301efc5cabcea296598e6614aedeb1e5d08ec519416a85ace4878f112474",
+      "bytes": 8069
+    },
+    {
+      "identifier": "ops/panel_v7_gxwtf.py",
+      "sha256": "8b9ebb8e79165658f52278c145814ce6134b4916bc18031fa2080d330869a7e9",
+      "bytes": 6176
+    },
+    {
+      "identifier": "ops/calibrate.py",
+      "sha256": "a058e1b82b6f65da4bddd4435303a64ae4e6e3408a4f93595d6718576fdc5ecc",
+      "bytes": 37364
+    },
+    {
+      "identifier": "ops/hcca_swebench.py",
+      "sha256": "275c5c6041082bd45f9050d01f60091da8425e12473a2a9e1a82c09884a412b5",
+      "bytes": 32087
+    },
+    {
+      "identifier": "ops/eval_hcca.sh",
+      "sha256": "70affaefacbcf02600ea99f3acaadbe7d4cd2cbdb51a3fdb50b2d7e2ac4e66ab",
+      "bytes": 1074
+    }
+  ],
+  "run_plan": {
+    "identifier": "preflight/repo-only-hcca-v7-gxwtf-20261112-plan.json",
+    "sha256": "9ac32cb92404d70c8db192a3f66f5db62c9c66278afd3980f6c0182a3a10d067",
+    "bytes": 116547
+  },
+  "task_manifest": {
+    "identifier": "verified50.manifest.json",
+    "sha256": "bd053c000d5051f5a42c246de8d2f62e04660ef6b53991ae3d60a6f65b8a10e1",
+    "bytes": 10374
+  },
+  "v7_calibration": {
+    "identifier": "results/repo-only-hcca-v7-gxwtf-20261112/calibration.json",
+    "sha256": "725a96d5ebf59cc2b204c1c5d5c803c18db881f9d8c3811eb95ea74463e9fb63",
+    "bytes": 130065
+  },
+  "baseline_calibration": {
+    "identifier": "results/repo-only-dsh50/calibration.json",
+    "sha256": "60f7f098097d968e5dee3e1c890d7e9169a14ea38c1d7977d0327861010a0975",
+    "bytes": 95901
+  },
+  "relay_ledger": {
+    "identifier": "results/v7-gxwtf-relay-requests.jsonl",
+    "sha256": "a8c57444ff8277091a433f047d2d4775637e17b4bec1e31c84ac353033c2cf57",
+    "bytes": 561749
+  },
+  "pricing_evidence": {
+    "identifier": "official-offpeak-price.json",
+    "sha256": "25bdccc9b3bf13db0bbc98a902f76e91535136406f85f57a43b918815f6def34",
+    "bytes": 713
+  },
+  "metadata_note": "The frozen runtime manifest inherited official-endpoint and concurrency-eight metadata from earlier preparation. The actual run plan and run-local adapters identify GXWTF and concurrency two."
+}

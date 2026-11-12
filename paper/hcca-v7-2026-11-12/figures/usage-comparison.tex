@@ -1,0 +1,48 @@
+\begin{minipage}[t]{.32\linewidth}\centering
+\textbf{\scriptsize Input tokens (millions)}\\[2pt]
+\begin{tikzpicture}\begin{axis}[
+width=\linewidth,height=37mm,xbar stacked,bar width=7pt,
+symbolic y coords={DSH high,HCCA v7},ytick=data,
+ymin={[normalized]-0.6},ymax={[normalized]1.6},xmin=0,xmax=150.89693332,
+axis lines*=left,axis line style={draw=none},tick style={draw=none},
+tick label style={font=\scriptsize},xmajorgrids,grid style={gray!15},enlarge y limits=false]
+\addplot[fill=accent,draw=none] coordinates {(35.849984,{HCCA v7}) (104.137856,{DSH high})};
+\addplot[fill=cachelight,draw=none] coordinates {(0.960532,{HCCA v7}) (2.12759,{DSH high})};
+\node[anchor=west,font=\scriptsize] at (axis cs:36.810516,HCCA v7){36.811};
+\node[anchor=west,font=\scriptsize] at (axis cs:106.265446,DSH high){$\geq$106.265};
+\end{axis}\end{tikzpicture}
+{\scriptsize \textcolor{accent}{Cached}\quad \textcolor{cachelight}{Uncached}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.32\linewidth}\centering
+\textbf{\scriptsize Output tokens (millions)}\\[2pt]
+\begin{tikzpicture}\begin{axis}[
+width=\linewidth,height=37mm,xbar stacked,bar width=7pt,
+symbolic y coords={DSH high,HCCA v7},ytick=data,
+ymin={[normalized]-0.6},ymax={[normalized]1.6},xmin=0,xmax=5.752188539999999,
+axis lines*=left,axis line style={draw=none},tick style={draw=none},
+tick label style={font=\scriptsize},xmajorgrids,grid style={gray!15},enlarge y limits=false]
+\addplot[fill=accent,draw=none] coordinates {(0.408903,{HCCA v7}) (3.690753,{DSH high})};
+\addplot[fill=cachelight,draw=none] coordinates {(0.245401,{HCCA v7}) (0.360084,{DSH high})};
+\node[anchor=west,font=\scriptsize] at (axis cs:0.654304,HCCA v7){0.654};
+\node[anchor=west,font=\scriptsize] at (axis cs:4.050837,DSH high){$\geq$4.050};
+\end{axis}\end{tikzpicture}
+{\scriptsize \textcolor{accent}{Reasoning}\quad \textcolor{cachelight}{Other output}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.32\linewidth}\centering
+\textbf{\scriptsize Normalized cost (USD)}\\[2pt]
+\begin{tikzpicture}\begin{axis}[
+width=\linewidth,height=37mm,xbar stacked,bar width=7pt,
+symbolic y coords={DSH high,HCCA v7},ytick=data,
+ymin={[normalized]-0.6},ymax={[normalized]1.6},xmin=0,xmax=4.34811706056,
+axis lines*=left,axis line style={draw=none},tick style={draw=none},
+tick label style={font=\scriptsize},xmajorgrids,grid style={gray!15},enlarge y limits=false]
+\addplot[fill=accent,draw=none] coordinates {(0.107549952,{HCCA v7}) (0.31241356800000003,{DSH high})};
+\addplot[fill=cachelight,draw=none] coordinates {(0.14407979999999998,{HCCA v7}) (0.3191385,{DSH high})};
+\addplot[fill=outputgold,draw=none] coordinates {(0.39258239999999994,{HCCA v7}) (2.4305022,{DSH high})};
+\node[anchor=west,font=\scriptsize] at (axis cs:0.6442121519999999,HCCA v7){0.644};
+\node[anchor=west,font=\scriptsize] at (axis cs:3.062054268,DSH high){$\geq$3.062};
+\end{axis}\end{tikzpicture}
+{\scriptsize \textcolor{accent}{Cached input}\quad \textcolor{cachelight}{Uncached input}\quad \textcolor{outputgold}{Output}}
+\end{minipage}

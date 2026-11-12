@@ -23,7 +23,7 @@
 | 已记录输入中的缓存占比 | 97.3906% | 97.9979% |
 | 归一费用，美元 | $0.644212152 | ≥ $3.062054268 |
 
-DSH 的 token 数取自用量完整的请求记录。一条部分记录使其 token 总量和归一费用为下界。输出包含 reasoning token，计费时计入一次。用量总计覆盖各自冻结运行中的全部实际模型请求。[机器可读摘要](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/reports/verified50-hcca-v7-vs-dsh-2026-11-12-summary.json) · [逐题结果](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/reports/verified50-hcca-v7-vs-dsh-2026-11-12-tasks.json)。
+DSH 的 token 数取自用量完整的请求记录。一条部分记录使其 token 总量和归一费用为下界。输出包含 reasoning token，计费时计入一次。用量总计覆盖各自冻结运行中的全部实际模型请求。[机器可读摘要](../reports/verified50-hcca-v7-vs-dsh-2026-11-12-summary.json) · [逐题结果](../reports/verified50-hcca-v7-vs-dsh-2026-11-12-tasks.json)。
 
 逐题配对结果为双方均通过 33 题、仅 HCCA 通过 3 题、仅 DSH 通过 2 题、双方均未通过 12 题。已记录 reasoning 字段占实测输出 token 差额的 96.6%。两组配置的推理强度存在差异。
 
@@ -56,8 +56,8 @@ HCCA Official 0.2.1 封装了当前的 Windows 与 DSH runtime。上述指标对
 
 ## 论文与历史结果
 
-- [论文 PDF](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.pdf)、[LaTeX 源码](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.tex)与[中文摘要](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/ABSTRACT.zh-CN.md)。
-- 历史冻结 v6 通过 38/50（76%），归一费用为 $0.738707166，使用 DeepSeek 官方接口与 8 题并发。该版本的配置与用量保留在独立记录中。[历史 v6 摘要](https://github.com/klarisaka/HCCA/blob/d337069fa8b81851d2086482992edd560244f4b6/reports/verified50-hcca-v6-vs-dsh-summary.json)。
+- [论文 PDF](../paper/hcca-v7-2026-11-12/main.pdf)、[LaTeX 源码](../paper/hcca-v7-2026-11-12/main.tex)与[中文摘要](../paper/hcca-v7-2026-11-12/ABSTRACT.zh-CN.md)。
+- 历史冻结 v6 通过 38/50（76%），归一费用为 $0.738707166，使用 DeepSeek 官方接口与 8 题并发。该版本的配置与用量保留在独立记录中。[历史 v6 摘要](../reports/verified50-hcca-v6-vs-dsh-summary.json)。
 - [使用与配置](USAGE.zh-CN.md) · [历史实验](USAGE.zh-CN.md#历史实验)。
 
 该题单使用社区数据集 `MariusHobbhahn/swe-bench-verified-mini` 的全部 50 题。早期版本曾在同一题单上开发和评测，本次成绩属于开发基准结果。

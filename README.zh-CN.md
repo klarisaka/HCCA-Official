@@ -36,7 +36,7 @@ SWE-bench Verified Mini，共 50 题。HCCA 有 49 题取得官方评测结果�
 
 双方均使用 GXWTF、`deepseek-v4.1-flash` 模型别名和 2 题并发。DSH 复用已冻结的基线运行，其一条用量记录不完整，因此 token 总量和费用为下界。费用统一按缓存感知价格归一。推理强度的差异限制了对架构效果的单独归因。
 
-上述结果对应冻结 v7 基准运行器。HCCA Official 0.2.1 是当前的 Windows 与 DSH runtime 发行版。[基准明细](docs/BENCHMARK-v7-2026-11-12.zh-CN.md) · [论文](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.pdf)。
+上述结果对应冻结 v7 基准运行器。HCCA Official 0.2.1 是当前的 Windows 与 DSH runtime 发行版。[基准明细](docs/BENCHMARK-v7-2026-11-12.zh-CN.md) · [论文](paper/hcca-v7-2026-11-12/main.pdf)。
 
 ## 在 DSH 中使用
 

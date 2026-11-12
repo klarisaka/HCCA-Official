@@ -23,7 +23,7 @@ Published on November 12, 2026. The community dataset `MariusHobbhahn/swe-bench-
 | Cached share of recorded input | 97.3906% | 97.9979% |
 | Normalized cost, USD | $0.644212152 | ≥ $3.062054268 |
 
-DSH's token counts cover its complete usage records. One partial record makes its total tokens and normalized cost lower bounds. Output includes reasoning tokens, counted once. Usage totals cover all actual model requests in the respective frozen runs. [Machine-readable summary](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/reports/verified50-hcca-v7-vs-dsh-2026-11-12-summary.json) · [Per-task outcomes](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/reports/verified50-hcca-v7-vs-dsh-2026-11-12-tasks.json).
+DSH's token counts cover its complete usage records. One partial record makes its total tokens and normalized cost lower bounds. Output includes reasoning tokens, counted once. Usage totals cover all actual model requests in the respective frozen runs. [Machine-readable summary](../reports/verified50-hcca-v7-vs-dsh-2026-11-12-summary.json) · [Per-task outcomes](../reports/verified50-hcca-v7-vs-dsh-2026-11-12-tasks.json).
 
 Paired outcomes are 33 tasks resolved by both, 3 by HCCA only, 2 by DSH only, and 12 by neither. The recorded reasoning field accounts for 96.6% of the measured output-token gap. Reasoning effort differs between the two configurations.
 
@@ -56,6 +56,6 @@ These rates normalize the comparison. Actual provider charges follow the provide
 
 ## Paper and historical results
 
-- [Paper PDF](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.pdf), [LaTeX source](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.tex), and [Chinese abstract](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/ABSTRACT.zh-CN.md).
-- Historical frozen v6 resolved 38/50 (76%) at $0.738707166 normalized cost. It used DeepSeek official with eight concurrent tasks. Its configuration and usage remain in the versioned record. [Historical v6 summary](https://github.com/klarisaka/HCCA/blob/d337069fa8b81851d2086482992edd560244f4b6/reports/verified50-hcca-v6-vs-dsh-summary.json).
+- [Paper PDF](../paper/hcca-v7-2026-11-12/main.pdf), [LaTeX source](../paper/hcca-v7-2026-11-12/main.tex), and [Chinese abstract](../paper/hcca-v7-2026-11-12/ABSTRACT.zh-CN.md).
+- Historical frozen v6 resolved 38/50 (76%) at $0.738707166 normalized cost. It used DeepSeek official with eight concurrent tasks. Its configuration and usage remain in the versioned record. [Historical v6 summary](../reports/verified50-hcca-v6-vs-dsh-summary.json).
 - [Usage and configuration](USAGE.md) · [Past experiments](USAGE.md#past-experiments).

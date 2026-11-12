@@ -116,6 +116,6 @@ Use the [benchmark harness](../benchmarks/README.md) with externally prepared ta
 
 ## Past experiments
 
-The latest frozen v7 comparison reports 36/50 for HCCA and 35/50 for the reused DSH baseline. The benchmark overview covers token usage, cached input, normalized cost, and configuration. [Frozen v7 overview](BENCHMARK-v7-2026-11-12.md) · [Paper](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.pdf).
+The latest frozen v7 comparison reports 36/50 for HCCA and 35/50 for the reused DSH baseline. The benchmark overview covers token usage, cached input, normalized cost, and configuration. [Frozen v7 overview](BENCHMARK-v7-2026-11-12.md) · [Paper](../paper/hcca-v7-2026-11-12/main.pdf).
 
-The historical frozen-v6 comparison with DSH minimal high is published in the original HCCA repository. It records the complete 50-task scope, provider configurations, normalized prices, and usage completeness. [Historical comparison](https://github.com/klarisaka/HCCA/blob/d337069fa8b81851d2086482992edd560244f4b6/reports/verified50-hcca-v6-vs-dsh-summary.json).
+The historical frozen-v6 comparison with DSH minimal high records the complete 50-task scope, provider configurations, normalized prices, and usage completeness. [Historical comparison](../reports/verified50-hcca-v6-vs-dsh-summary.json).

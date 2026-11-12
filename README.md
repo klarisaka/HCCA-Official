@@ -36,7 +36,7 @@ SWE-bench Verified Mini, 50 tasks. HCCA has 49 official evaluations and one unfi
 
 Both used GXWTF, the `deepseek-v4.1-flash` model alias, and two concurrent tasks. The DSH baseline is reused from its frozen run. Its partial usage record makes token and cost totals lower bounds. Costs use common cache-aware rates. The different reasoning efforts limit attribution to architecture.
 
-These results describe the frozen v7 benchmark runner. HCCA Official 0.2.1 is the current Windows and DSH runtime distribution. [Benchmark details](docs/BENCHMARK-v7-2026-11-12.md) · [Paper](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.pdf).
+These results describe the frozen v7 benchmark runner. HCCA Official 0.2.1 is the current Windows and DSH runtime distribution. [Benchmark details](docs/BENCHMARK-v7-2026-11-12.md) · [Paper](paper/hcca-v7-2026-11-12/main.pdf).
 
 ## Use with DSH
 

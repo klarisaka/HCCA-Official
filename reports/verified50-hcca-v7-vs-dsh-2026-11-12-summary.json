@@ -1,0 +1,304 @@
+{
+  "schema": "hcca.verified50.publication-summary.v1",
+  "phase_id": "repo-only-hcca-v7-gxwtf-20261112",
+  "dataset": {
+    "id": "MariusHobbhahn/swe-bench-verified-mini",
+    "source_file": "bench/swebench/verified-mini/mini.json",
+    "source_data_sha256": "c67124e0e1a2cd226b8733e50a4cb403840a38e8eb1eb351ec0adb49a291a639",
+    "instance_count": 50,
+    "selection_rule": "Use every instance in mini.json in the original dataset order.",
+    "task_manifest_sha256": "bd053c000d5051f5a42c246de8d2f62e04660ef6b53991ae3d60a6f65b8a10e1"
+  },
+  "publication_status": "closed_with_one_unfinished_case",
+  "audited_at_utc": "2026-11-12T13:19:13.243691+00:00",
+  "denominator": 50,
+  "official_evaluated": 49,
+  "official_resolved": 36,
+  "official_unresolved": 13,
+  "unfinished": 1,
+  "unfinished_instance_ids": [
+    "sphinx-doc__sphinx-8721"
+  ],
+  "full50_resolved_percent": "72",
+  "official_resolved_field_policy": "Only an explicit official boolean supplies a case outcome. The unfinished case retains null and contributes zero to the full50 score.",
+  "usage": {
+    "actual_requests": 1301,
+    "complete_usage_requests": 1301,
+    "incomplete_usage_requests": 0,
+    "missing_usage_requests": 0,
+    "partial_usage_requests": 0,
+    "requests_with_nonempty_error_field": 0,
+    "http_error_requests": 0,
+    "http_200_requests": 1301,
+    "partial_transport_requests": 0,
+    "known_complete_tokens": {
+      "input": 36810516,
+      "cached": 35849984,
+      "uncached": 960532,
+      "output": 654304
+    },
+    "tokens": {
+      "input": 36810516,
+      "cached": 35849984,
+      "uncached": 960532,
+      "output": 654304
+    },
+    "known_reasoning_tokens": 408903,
+    "reasoning_unknown_complete_requests": 0,
+    "normalized_cost_usd": "0.644212152",
+    "known_complete_cost_lower_bound_usd": "0.644212152",
+    "logical_model_calls": 1301,
+    "transport_retries": 0,
+    "reasoning_included_in_output": true
+  },
+  "dsh_baseline_usage": {
+    "actual_requests": 2014,
+    "complete_usage_requests": 2013,
+    "incomplete_usage_requests": 1,
+    "missing_usage_requests": 0,
+    "partial_usage_requests": 1,
+    "requests_with_nonempty_error_field": 2014,
+    "http_error_requests": 0,
+    "http_200_requests": 2014,
+    "partial_transport_requests": 1,
+    "known_complete_tokens": {
+      "input": 106265446,
+      "cached": 104137856,
+      "uncached": 2127590,
+      "output": 4050837
+    },
+    "tokens": {
+      "input": null,
+      "cached": null,
+      "uncached": null,
+      "output": null
+    },
+    "known_reasoning_tokens": 3690753,
+    "reasoning_unknown_complete_requests": 0,
+    "normalized_cost_usd": null,
+    "known_complete_cost_lower_bound_usd": "3.062054268",
+    "reasoning_included_in_output": true,
+    "transport_retries": null,
+    "retry_accounting_note": "The stored request event schema counts physical starts with unique request IDs. Logical-call retry grouping is unavailable.",
+    "error_field_note": "The request logger records a stream-consumer-stop diagnostic for 2013 complete HTTP 200 responses and a diagnostic for the one partial response. All 2014 responses have HTTP status 200.",
+    "partial_usage_observed_counters": [
+      {
+        "instance_id": "sphinx-doc__sphinx-7985",
+        "request_index": 189,
+        "started_at": "2026-11-11T07:51:36.642Z",
+        "finished_at": "2026-11-11T07:51:53.601Z",
+        "input": 223906,
+        "cached": null,
+        "uncached": null,
+        "output": 3274,
+        "reasoning": 3274
+      }
+    ],
+    "observed_reasoning_tokens_including_partial": 3694027,
+    "partial_usage_note": "Observed counters from the partial response are retained below. Complete-request totals and the published lower-bound cost use the 2013 complete records. Cache-hit and cache-miss counters remain unknown for the partial response."
+  },
+  "normalized_pricing": {
+    "currency": "USD",
+    "token_unit": 1000000,
+    "cached_input_per_1m": "0.003",
+    "uncached_input_per_1m": "0.15",
+    "output_per_1m": "0.60",
+    "reasoning_billed_with_output_once": true,
+    "actual_provider_billing_usd": null,
+    "basis": "user-selected unified DeepSeek Flash off-peak normalization",
+    "source_url": "https://api-docs.deepseek.com/quick_start/pricing/"
+  },
+  "comparison": {
+    "comparison_scope": "descriptive paired comparison of this frozen 50-task subset",
+    "denominator": 50,
+    "dsh_resolved": 35,
+    "v7_resolved": 36,
+    "resolved_difference": 1,
+    "percentage_point_difference": "2",
+    "both_resolved": 33,
+    "dsh_only_resolved": 2,
+    "v7_only_resolved": 3,
+    "neither_resolved": 12,
+    "normalized_v7_to_dsh_cost_ratio_upper_bound": "0.2103856090116819575583041234",
+    "normalized_cost_reduction_percent_lower_bound": "78.96143909883180424416958766",
+    "baseline_reused": true,
+    "new_baseline_model_requests": 0,
+    "baseline_and_v7_provider": "GXWTF",
+    "baseline_and_v7_model": "deepseek-v4.1-flash",
+    "baseline_and_v7_case_concurrency": 2,
+    "baseline_reasoning_effort": "high",
+    "v7_executor_reasoning_effort": "low"
+  },
+  "timing": {
+    "phase_started_at_utc": "2026-11-12T11:58:43.177915+00:00",
+    "last_model_response_finished_at_utc": "2026-11-12T12:58:19.077000+00:00",
+    "last_official_evaluation_finished_at_utc": "2026-11-12T12:58:52+00:00",
+    "last_calibration_recorded_at_utc": "2026-11-12T12:58:52.765563+00:00",
+    "phase_start_to_last_calibration_wall_elapsed_s": "3609.587648",
+    "sum_runtime_elapsed_s": "4486.3",
+    "sum_model_process_wait_elapsed_s": "4650.108",
+    "runtime_elapsed_note": "Per-case runtime status elapsed time is rounded to 0.1 seconds. Model-process wait time is recorded by the host generation wrapper. The run used two concurrent case slots.",
+    "generation_finish_note": "Per-case evaluation timestamps record the generation-to-evaluation handoff for 49 cases. The unfinished case has no evaluation start or finish timestamp.",
+    "relay": {
+      "first_http_started_at_utc": "2026-11-12T11:58:47.979004+00:00",
+      "last_http_started_at_utc": "2026-11-12T12:58:16.619910+00:00",
+      "last_response_finished_at_utc": "2026-11-12T12:58:19.096910+00:00"
+    },
+    "dsh_baseline": {
+      "first_case_generation_started_at_utc": "2026-11-11T04:13:20.328463+00:00",
+      "first_model_request_started_at_utc": "2026-11-11T04:13:28.043000+00:00",
+      "last_model_response_finished_at_utc": "2026-11-11T09:00:27.345000+00:00",
+      "timing_evidence": "Physical request_started and request_finished event times from all 50 frozen baseline request files."
+    }
+  },
+  "actual_run_configuration": {
+    "provider": "GXWTF",
+    "endpoint": "https://ai.gxwtf.cn/v1",
+    "model": "deepseek-v4.1-flash",
+    "case_concurrency": 2,
+    "max_model_concurrency": 2,
+    "role_reasoning_effort": {
+      "thinking": "high",
+      "executor": "low",
+      "reader": "low"
+    },
+    "actual_request_reasoning_effort_counts": {
+      "low": 1301
+    },
+    "initial_planning_calls": 0,
+    "executor_context_budget_tokens": 524288,
+    "active_wall_budget_per_case_s": 4800,
+    "executor_round_limit": null,
+    "shared_call_limit": null,
+    "output_cap_fields": [],
+    "sampling_fields_omitted": [
+      "temperature",
+      "seed"
+    ],
+    "repo_only": true,
+    "fresh_case_count": 50,
+    "historical_case_sources": [],
+    "transport_tls_certificate_validation": "disabled in the dedicated run-local relay for the gateway certificate compatibility issue"
+  },
+  "source_provenance": {
+    "frozen_source_manifest_sha256": "31b32e1e9007889691180b79ea876d98a3f9665764176066fd4adbf1204f0f07",
+    "task_manifest_sha256": "bd053c000d5051f5a42c246de8d2f62e04660ef6b53991ae3d60a6f65b8a10e1",
+    "runtime_source_files_verified": 41,
+    "frozen_ops_files_verified": 10,
+    "all_cases_record_same_source_manifest": true,
+    "run_local_adapter_sources": [
+      {
+        "identifier": "ops/hcca_v7_gxwtf_swebench.py",
+        "sha256": "ea89bf23afffc0f6a19c03337d55a726ba3210ed94ec9482c4cd9d7da840beb8",
+        "bytes": 22443
+      },
+      {
+        "identifier": "ops/hcca_v7_gxwtf_probe.py",
+        "sha256": "b889fc95c72409ce30422d0c679abd4eba567f67a1d31c9674b628835adef724",
+        "bytes": 16399
+      },
+      {
+        "identifier": "ops/run_hcca_v7_gxwtf.py",
+        "sha256": "37b233d024804bb3df9ef9117a4fd8d8d1f53c1c56c62369ac9b2de0925d5ab1",
+        "bytes": 9717
+      },
+      {
+        "identifier": "ops/repo_only_v7_gxwtf_runtime.py",
+        "sha256": "8a112e202d627e780e446b82e50937a4c933691edb11247bbab58eb9804168cb",
+        "bytes": 2359
+      },
+      {
+        "identifier": "ops/repo_only_v7_gxwtf_relay.py",
+        "sha256": "37d9301efc5cabcea296598e6614aedeb1e5d08ec519416a85ace4878f112474",
+        "bytes": 8069
+      },
+      {
+        "identifier": "ops/panel_v7_gxwtf.py",
+        "sha256": "8b9ebb8e79165658f52278c145814ce6134b4916bc18031fa2080d330869a7e9",
+        "bytes": 6176
+      },
+      {
+        "identifier": "ops/calibrate.py",
+        "sha256": "a058e1b82b6f65da4bddd4435303a64ae4e6e3408a4f93595d6718576fdc5ecc",
+        "bytes": 37364
+      },
+      {
+        "identifier": "ops/hcca_swebench.py",
+        "sha256": "275c5c6041082bd45f9050d01f60091da8425e12473a2a9e1a82c09884a412b5",
+        "bytes": 32087
+      },
+      {
+        "identifier": "ops/eval_hcca.sh",
+        "sha256": "70affaefacbcf02600ea99f3acaadbe7d4cd2cbdb51a3fdb50b2d7e2ac4e66ab",
+        "bytes": 1074
+      }
+    ],
+    "inventory": {
+      "filename": "verified50-hcca-v7-2026-11-12-source-inventory.json",
+      "sha256": "bf5a5bd2370a2938672da38e1c79dcd5a86eda120aeb243cba9c9b2d1ea4e7ba",
+      "bytes": 16407
+    },
+    "per_task_accounting": {
+      "filename": "verified50-hcca-v7-vs-dsh-2026-11-12-tasks.json",
+      "sha256": "aa3cc382ca48b4a393d237b9324e80eea1cb54cde6cbfd2210517dd2b31ca405",
+      "bytes": 408881
+    }
+  },
+  "audit": {
+    "runtime_to_export_request_accounting_matches_cases": 50,
+    "runtime_request_count": 1301,
+    "dedicated_relay_request_count": 1301,
+    "dedicated_relay_http_200_count": 1301,
+    "dedicated_relay_complete_response_count": 1301,
+    "source_manifest_matches_user_freeze": true,
+    "baseline_calibration_matches_frozen_plan_reference": true,
+    "recorded_calibration_phase": "running",
+    "calibration_phase_note": "The host controller retained phase=running after the preserved harness error. This publication closes the denominator at the user instruction.",
+    "request_errors": 0,
+    "transport_retries": 0,
+    "infrastructure_retry_attempts": 5,
+    "infrastructure_error_attempts": 6,
+    "no_new_model_calls_during_audit": true
+  },
+  "scope": {
+    "included": "all actual model requests from this fresh frozen v7 full50 phase, including the unfinished case",
+    "development_history_included": false,
+    "prior_results_reused_as_v7_answers": false,
+    "baseline_reused": true,
+    "earlier_versions_developed_and_evaluated_on_same_manifest": true
+  },
+  "published_date": "2026-11-12",
+  "paper": {
+    "title": "HCCA for Token-Efficient Repository Repair",
+    "pdf": "../paper/hcca-v7-2026-11-12/main.pdf",
+    "source": "../paper/hcca-v7-2026-11-12/main.tex",
+    "chinese_abstract": "../paper/hcca-v7-2026-11-12/ABSTRACT.zh-CN.md",
+    "files": [
+      {
+        "filename": "main.pdf",
+        "sha256": "fc50bb067e7f243cb6fc4bb91bd72d8c027fcf515e9610826e9a5e06756e3744",
+        "bytes": 62226
+      },
+      {
+        "filename": "main.tex",
+        "sha256": "174c0d9c22216779866c6a8414d2126cf7a72781108b9c05a32908052f6ed37d",
+        "bytes": 23297
+      },
+      {
+        "filename": "metrics.tex",
+        "sha256": "eb03a217e991e844ddb4b03d7269be011a7634afe7aa67bac5b0a3ff35b9150e",
+        "bytes": 975
+      },
+      {
+        "filename": "figures/usage-comparison.tex",
+        "sha256": "66124417e517ac1e5a9d6be90daabb472548a29c996c5591e43b6af1feae8330",
+        "bytes": 3023
+      },
+      {
+        "filename": "ABSTRACT.zh-CN.md",
+        "sha256": "829fb2d90b2e369ba4a904defc77e5f47978693fb91d81328efbfe6cbf6bf934",
+        "bytes": 2901
+      }
+    ]
+  }
+}
