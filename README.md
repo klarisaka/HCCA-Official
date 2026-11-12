@@ -11,14 +11,17 @@ Root plans and integrates the work. Each delegated task starts with a fresh cont
 ```mermaid
 flowchart LR
     U["You"] --> R["Root"]
-    R --> A["Reader"]
-    R --> B["Executor"]
-    R --> C["Analyst"]
-    A --> S["Concise results + evidence"]
-    B --> S
-    C --> S
-    S --> R
+    R -->|delegate| ER["Executor"]
+    ER -->|result + evidence| R
+    R -->|analysis task| A["Analyst"]
+    A -->|findings| R
+    A -->|delegate| EA["Executor"]
+    EA -->|result + evidence| A
+    R -->|read| RR["Reader"]
+    RR -->|findings| R
 ```
+
+Each Executor box represents an independent assignment using the shared role configuration. Results return to the parent that requested the task.
 
 | Mode | Who plans the work | Start here |
 | --- | --- | --- |
@@ -31,8 +34,10 @@ SWE-bench Verified Mini, 50 tasks. HCCA has 49 official evaluations and one unfi
 
 | Frozen run | Resolved | Input tokens | Cached input | Output tokens | Normalized cost |
 | --- | --- | --- | --- | --- | --- |
-| **HCCA v7** · direct executor · low | **36/50 (72%)** | **36.811M** | **35.850M** | **0.654M** | **$0.644** |
+| **HCCA v7** · mixed by role | **36/50 (72%)** | **36.811M** | **35.850M** | **0.654M** | **$0.644** |
 | DSH minimal · high | 35/50 (70%) | ≥ 106.265M | ≥ 104.137M | ≥ 4.050M | ≥ $3.062 |
+
+The v7 role policy uses `high` for thinking/planning and analysts, and `low` for execution/reading. This direct-executor run recorded 1,301 `low` requests and zero `high` requests.
 
 Both used GXWTF, the `deepseek-v4.1-flash` model alias, and two concurrent tasks. The DSH baseline is reused from its frozen run. Its partial usage record makes token and cost totals lower bounds. Costs use common cache-aware rates. The different reasoning efforts limit attribution to architecture.
 

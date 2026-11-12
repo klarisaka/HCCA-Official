@@ -36,7 +36,8 @@ The HCCA phase took approximately 60 minutes 9.6 seconds with two concurrent tas
 | Provider | GXWTF | GXWTF |
 | Configured model alias | `deepseek-v4.1-flash` | `deepseek-v4.1-flash` |
 | Concurrent benchmark tasks | 2 | 2 |
-| Execution reasoning effort | `low` | `high` |
+| Configured reasoning policy | Mixed by role, thinking/planning and analyst `high`, executor/reader `low` | `high` |
+| Observed benchmark request effort | 1,301 `low`, 0 `high` | Baseline `high` |
 | Execution path | Direct executor, initial planning bypassed | `sdk-minimal` |
 | Run | Frozen v7 | Reused frozen `sdk-minimal` baseline |
 

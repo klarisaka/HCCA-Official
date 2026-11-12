@@ -11,7 +11,7 @@ This guide covers HCCA Official 0.2.1.
 | DSH plugin | Your DSH chat | Delegate reading, execution, and analysis from chat and add guidance while tasks run |
 | Standalone HCCA | HCCA itself | Submit a task from the command line for HCCA to plan and complete |
 
-Both entry points share reader, executor, and guidance capabilities. Readers inspect files, executors edit files and run commands or tests, and analysts reason about tasks and delegate further work. Shared role configurations live in `~/.hcca/agents` by default. Set `HCCA_AGENT_HOME` to use another location. Each task has its own context.
+Both entry points share reader, executor, and guidance capabilities. Readers inspect files, executors edit files and run commands or tests, and analysts reason about tasks and delegate further work. Shared role configurations live in `~/.hcca/agents` by default. Set `HCCA_AGENT_HOME` to use another location. Each task has its own context. Root and analysts can delegate to executors, receive the results, and plan the next step.
 
 ## Model connection
 

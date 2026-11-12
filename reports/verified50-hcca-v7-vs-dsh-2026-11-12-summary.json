@@ -127,7 +127,8 @@
     "baseline_and_v7_model": "deepseek-v4.1-flash",
     "baseline_and_v7_case_concurrency": 2,
     "baseline_reasoning_effort": "high",
-    "v7_executor_reasoning_effort": "low"
+    "v7_executor_reasoning_effort": "low",
+    "v7_configured_reasoning_policy": "mixed_by_role"
   },
   "timing": {
     "phase_started_at_utc": "2026-11-12T11:58:43.177915+00:00",
@@ -163,7 +164,8 @@
       "reader": "low"
     },
     "actual_request_reasoning_effort_counts": {
-      "low": 1301
+      "low": 1301,
+      "high": 0
     },
     "initial_planning_calls": 0,
     "executor_context_budget_tokens": 524288,
@@ -178,7 +180,9 @@
     "repo_only": true,
     "fresh_case_count": 50,
     "historical_case_sources": [],
-    "transport_tls_certificate_validation": "disabled in the dedicated run-local relay for the gateway certificate compatibility issue"
+    "transport_tls_certificate_validation": "disabled in the dedicated run-local relay for the gateway certificate compatibility issue",
+    "configured_reasoning_policy": "mixed_by_role",
+    "observed_execution_path": "direct_executor_with_local_root_dispatch"
   },
   "source_provenance": {
     "frozen_source_manifest_sha256": "31b32e1e9007889691180b79ea876d98a3f9665764176066fd4adbf1204f0f07",
@@ -276,13 +280,13 @@
     "files": [
       {
         "filename": "main.pdf",
-        "sha256": "fc50bb067e7f243cb6fc4bb91bd72d8c027fcf515e9610826e9a5e06756e3744",
-        "bytes": 62226
+        "sha256": "52a8d3cc00a1bb53ed118e7bd5ea1e3d26fcac17e745902e8280c7ee360c20ef",
+        "bytes": 62842
       },
       {
         "filename": "main.tex",
-        "sha256": "174c0d9c22216779866c6a8414d2126cf7a72781108b9c05a32908052f6ed37d",
-        "bytes": 23297
+        "sha256": "de82b3caeca63594c88e7c6706e7c2e38de327251a87c18601e31eaa65d9c3d0",
+        "bytes": 24337
       },
       {
         "filename": "metrics.tex",
@@ -296,8 +300,8 @@
       },
       {
         "filename": "ABSTRACT.zh-CN.md",
-        "sha256": "829fb2d90b2e369ba4a904defc77e5f47978693fb91d81328efbfe6cbf6bf934",
-        "bytes": 2901
+        "sha256": "ddef3fb061ce71813c6bbc92f180bf6f73f62857e381a35cf9f921aa069a4e3c",
+        "bytes": 3191
       }
     ]
   }

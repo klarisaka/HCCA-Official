@@ -48,8 +48,10 @@ the 50-task denominator. HCCA uses \HRequests{} model requests,
 \HCachePct{}\% of input reported as cached. At common off-peak token prices,
 its normalized cost is \$\HCost{}, compared with a baseline known-complete
 cost of at least \$\BCost{}. Both runs use the GXWTF endpoint, the
-\texttt{deepseek-v4.1-flash} model alias and two concurrent tasks. HCCA execution
-uses low reasoning effort and the baseline uses high. The observations support
+\texttt{deepseek-v4.1-flash} model alias and two concurrent tasks. HCCA's role
+policy configures thinking/planning and analysts at high effort and
+execution/reading at low. This direct-executor run records 1,301 low and zero
+high requests. The baseline uses high. The observations support
 an economical configuration on this manifest. They leave the separate
 contributions of context design, prompts, tools and reasoning effort unresolved.
 \end{abstract}
@@ -95,8 +97,11 @@ each assignment starts a fresh conversation.
 
 Readers inspect source and other necessary files. Executors inspect code,
 modify the workspace, run commands and adapt to observed failures. Analysts
-support reasoning and further delegation. A parent integrates the returned
-results and chooses subsequent assignments. User guidance enters the parent,
+support reasoning and further delegation. Root and analysts can each invoke
+an executor and receive its result in their own task context. The caller
+inspects the evidence and chooses subsequent assignments. Readers follow the
+same parent-return relationship. Available execution modes and write tools
+follow the task's permissions. User guidance enters the parent,
 which determines the affected children and forwards relevant instructions.
 These are runtime capabilities. User-guided intervention and hierarchical
 decomposition were outside the measured direct-executor protocol.
@@ -131,22 +136,23 @@ separately. Provider-reported token usage is used for all empirical accounting.
 \centering
 \begin{tikzpicture}[
   box/.style={draw=accent,rounded corners=2pt,align=center,font=\small,
-    minimum height=10mm,text width=28mm},
+    minimum height=9mm,text width=33mm},
   arrow/.style={-{Latex[length=2mm]},draw=accent,thick}]
-\node[box] (task) {Issue and\\base repository};
-\node[box,right=6mm of task] (root) {Local Root\\dispatcher};
-\node[box,right=6mm of root] (exec) {Executor\\low effort};
-\node[box,right=6mm of exec] (patch) {Patch and\\official evaluation};
-\node[box,below=7mm of exec] (tools) {Read, edit,\\run and inspect};
-\draw[arrow] (task) -- (root);
-\draw[arrow] (root) -- (exec);
-\draw[arrow] (exec) -- (patch);
-\draw[arrow] (exec.south west) to[bend right=15] (tools.north west);
-\draw[arrow] (tools.north east) to[bend right=15] (exec.south east);
+\node[box] (root) {Root};
+\node[box,right=36mm of root] (analyst) {Analyst};
+\node[box,below=14mm of root] (rootexec) {Executor\\independent task};
+\node[box,below=14mm of analyst] (analystexec) {Executor\\independent task};
+\draw[arrow] (root.north east) to[bend left=15] node[above,font=\scriptsize]{assignment} (analyst.north west);
+\draw[arrow] (analyst.south west) to[bend left=15] node[below,font=\scriptsize]{findings} (root.south east);
+\draw[arrow] (root.south west) to[bend right=18] node[left,font=\scriptsize]{task} (rootexec.north west);
+\draw[arrow] (rootexec.north east) to[bend right=18] node[right,font=\scriptsize]{result} (root.south east);
+\draw[arrow] (analyst.south west) to[bend right=18] node[left,font=\scriptsize]{task} (analystexec.north west);
+\draw[arrow] (analystexec.north east) to[bend right=18] node[right,font=\scriptsize]{result} (analyst.south east);
 \end{tikzpicture}
-\caption{Measured frozen-v7 path. Root dispatches directly to the executor.
-The model and tool loop remains within that worker's task context. Official
-evaluation runs after generation.}
+\caption{Runtime delegation and return loops. Each executor assignment has its
+own context and returns evidence to its requesting parent. This benchmark uses
+the direct Root-to-executor route with local Root dispatch and low execution
+effort.}
 \label{fig:path}
 \end{figure}
 
@@ -204,7 +210,10 @@ Setting & HCCA frozen v7 & DSH minimal baseline\\
 \midrule
 Provider and model alias & \multicolumn{2}{l}{GXWTF, \texttt{deepseek-v4.1-flash}}\\
 Concurrent tasks & 2 & 2\\
-Execution reasoning effort & low & high\\
+Configured reasoning policy & Mixed by role & Single high-effort agent\\
+Thinking/planning and analyst effort & high & \textemdash\\
+Executor/reader effort & low & \textemdash\\
+Observed benchmark request effort & 1,301 low, 0 high & baseline high\\
 Initial model-planning stage & omitted & native minimal loop\\
 Run date, UTC & November 12, 2026 & November 11, 2026\\
 Active task time budget & 4,800 seconds & 4,800 seconds\\
@@ -212,9 +221,10 @@ Requested output token ceiling & omitted & omitted\\
 Temperature and seed & omitted & server defaults\\
 \bottomrule
 \end{tabular}
-\caption{Recorded experiment settings. Optional HCCA thinking and reading roles
-are configured high and low, respectively. Observed HCCA requests in this run
-use low. The context budget is a local estimate.}
+\caption{Recorded experiment settings. The HCCA mixed role policy includes high
+thinking/planning and analyst roles and low executor/reader roles. The direct
+execution path produced 1,301 low requests and zero high requests. DSH uses
+one high-effort agent. The context budget is a local estimate.}
 \label{tab:config}
 \end{table}
 

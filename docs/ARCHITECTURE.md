@@ -15,23 +15,30 @@ The DSH plugin dispatches directly to a worker entry point. Its planning and fin
 
 ```mermaid
 flowchart LR
-    U["User guidance"] --> R["Root plans and integrates"]
-    R --> A["Reader · inspect"]
-    R --> B["Executor · edit and test"]
-    R --> C["Analyst · reason and delegate"]
-    A --> S["Results + evidence"]
-    B --> S
-    C --> S
-    S --> R
+    U["You"] --> R["Root"]
+    R -->|delegate| ER["Executor"]
+    ER -->|result + evidence| R
+    R -->|analysis task| A["Analyst"]
+    A -->|findings| R
+    A -->|delegate| EA["Executor"]
+    EA -->|result + evidence| A
+    R -->|read| RR["Reader"]
+    RR -->|findings| R
+    A -->|read| RA["Reader"]
+    RA -->|findings| A
 ```
+
+Each Executor box represents an independent assignment using the shared role configuration. Results return to the parent that requested the task.
 
 ## Context and cache reuse
 
 Each assignment starts with a fresh worker context. Shared reader and executor role configurations live in `~/.hcca/agents`, configurable with `HCCA_AGENT_HOME`. Stable role prompts occupy the system prefix. Task details, tool results, and later guidance enter the changing conversation tail.
 
+Root and analysts can both delegate to an executor. The executor returns its result to the caller, which inspects the evidence and decides whether to issue another assignment. Reader results follow the same parent-return relationship. Analyst command and test assignments use `delegate_execution`, with the requested mode and available write tools governed by the task's permissions.
+
 Workers return concise results and evidence references to their parent. An executor can inspect a failed command, revise its approach, and retry within its own task. This keeps repeated tool output and recovery history close to the work that produced them.
 
-In the DSH integration, analysts use `high` reasoning and readers and executors use `low`. DSH controls Root's model. HCCA workers have their own model connection. Requests omit output token caps.
+HCCA supports mixed reasoning by role. In the DSH integration, analysts use `high` reasoning and readers and executors use `low`. DSH controls Root's model. HCCA workers have their own model connection. Requests omit output token caps.
 
 ## Guidance during execution
 

@@ -36,7 +36,8 @@ HCCA 阶段以 2 题并发运行约 60 分 9.6 秒，包含生成与官方评测
 | 服务商 | GXWTF | GXWTF |
 | 配置的模型别名 | `deepseek-v4.1-flash` | `deepseek-v4.1-flash` |
 | 基准题目并发数 | 2 | 2 |
-| 执行推理强度 | `low` | `high` |
+| 配置的角色推理策略 | 混合，思考、规划与 Analyst `high`，Executor/Reader `low` | `high` |
+| 本次基准实际请求强度 | `low` 1,301 次，`high` 0 次 | 基线 `high` |
 | 执行路径 | 直接执行，初始阶段跳过规划 | `sdk-minimal` |
 | 运行版本 | 冻结 v7 | 复用冻结的 `sdk-minimal` 基线 |
 

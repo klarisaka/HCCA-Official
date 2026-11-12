@@ -11,7 +11,7 @@
 | DSH 插件 | DSH 当前聊天 | 在聊天中派发阅读、执行和分析任务，随时补充要求 |
 | HCCA 独立运行 | HCCA 自身 | 从命令行提交任务，由 HCCA 拆解并整合结果 |
 
-两种入口共用 reader、executor 与引导消息能力。reader 负责阅读，executor 负责修改、命令和测试，analyst 负责分析与进一步拆解。共享角色配置默认位于 `~/.hcca/agents`，可通过 `HCCA_AGENT_HOME` 指定位置。每个任务使用独立上下文。
+两种入口共用 reader、executor 与引导消息能力。reader 负责阅读，executor 负责修改、命令和测试，analyst 负责分析与进一步拆解。共享角色配置默认位于 `~/.hcca/agents`，可通过 `HCCA_AGENT_HOME` 指定位置。每个任务使用独立上下文。Root 与 Analyst 都可以派发 Executor，收到结果后继续规划。
 
 ## 模型连接
 
