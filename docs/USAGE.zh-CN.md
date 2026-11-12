@@ -116,4 +116,6 @@ Root、worker、上下文与引导消息的设计见[架构说明](ARCHITECTURE.
 
 ## 历史实验
 
+最新冻结 v7 对照中，HCCA 通过 36/50，复用的 DSH 基线通过 35/50。基准概览包含 token 用量、缓存输入、归一费用与配置。[冻结 v7 概览](BENCHMARK-v7-2026-11-12.zh-CN.md) · [论文](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.pdf)。
+
 冻结 v6 与 DSH 极简 high 的历史对照保存在原 HCCA 仓库，包含完整 50 题范围、接口配置、归一价格与用量完整性。[历史对照记录](https://github.com/klarisaka/HCCA/blob/d337069fa8b81851d2086482992edd560244f4b6/reports/verified50-hcca-v6-vs-dsh-summary.json)。

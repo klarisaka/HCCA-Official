@@ -25,16 +25,18 @@ flowchart LR
 | DSH 插件 | DSH 聊天直接作为 Root | 安装插件，在 DSH 中选择 HCCA |
 | 独立运行 | HCCA 自身作为 Root | 使用下面的命令 |
 
-## 历史基准结果
+## 冻结 v7 基准结果
 
-历史 SWE-bench Verified Mini，全部 50 题均经过官方评测器评分。
+SWE-bench Verified Mini，共 50 题。HCCA 有 49 题取得官方评测结果，1 题未完成，计为未通过。
 
-| 冻结版本 | 通过题数 | 归一费用 |
-| --- | --- | --- |
-| **HCCA v6** · 直接执行 Agent · low | **38/50（76%）** | **$0.739** |
-| DSH 极简 · high | 35/50（70%） | ≥ $3.062 |
+| 冻结版本 | 通过题数 | 输入 token | 缓存输入 | 输出 token | 归一费用 |
+| --- | --- | --- | --- | --- | --- |
+| **HCCA v7** · 直接执行 Agent · low | **36/50（72%）** | **36.811M** | **35.850M** | **0.654M** | **$0.644** |
+| DSH 极简 · high | 35/50（70%） | ≥ 106.265M | ≥ 104.137M | ≥ 4.050M | ≥ $3.062 |
 
-HCCA 使用 DeepSeek 官方接口，DSH 使用 GXWTF，费用统一按谷价归一。DSH 有一条用量记录不完整，因此费用为下界。[配置与计费明细](https://github.com/klarisaka/HCCA/blob/d337069fa8b81851d2086482992edd560244f4b6/reports/verified50-hcca-v6-vs-dsh-summary.json)。
+双方均使用 GXWTF、`deepseek-v4.1-flash` 模型别名和 2 题并发。DSH 复用已冻结的基线运行，其一条用量记录不完整，因此 token 总量和费用为下界。费用统一按缓存感知价格归一。推理强度的差异限制了对架构效果的单独归因。
+
+上述结果对应冻结 v7 基准运行器。HCCA Official 0.2.1 是当前的 Windows 与 DSH runtime 发行版。[基准明细](docs/BENCHMARK-v7-2026-11-12.zh-CN.md) · [论文](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.pdf)。
 
 ## 在 DSH 中使用
 

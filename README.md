@@ -25,16 +25,18 @@ flowchart LR
 | DSH plugin | Your DSH chat acts as Root | Install the plugin and select HCCA |
 | Standalone | HCCA runs its own Root | Use the command below |
 
-## Historical benchmark
+## Frozen v7 benchmark
 
-Historical SWE-bench Verified Mini, all 50 tasks scored by the official evaluator.
+SWE-bench Verified Mini, 50 tasks. HCCA has 49 official evaluations and one unfinished task counted as unresolved.
 
-| Frozen run | Resolved | Normalized cost |
-| --- | --- | --- |
-| **HCCA v6** · direct executor · low | **38/50 (76%)** | **$0.739** |
-| DSH minimal · high | 35/50 (70%) | ≥ $3.062 |
+| Frozen run | Resolved | Input tokens | Cached input | Output tokens | Normalized cost |
+| --- | --- | --- | --- | --- | --- |
+| **HCCA v7** · direct executor · low | **36/50 (72%)** | **36.811M** | **35.850M** | **0.654M** | **$0.644** |
+| DSH minimal · high | 35/50 (70%) | ≥ 106.265M | ≥ 104.137M | ≥ 4.050M | ≥ $3.062 |
 
-HCCA used DeepSeek official and DSH used GXWTF. Costs use common off-peak rates. One partial DSH usage record makes its cost a lower bound. [Configuration and accounting](https://github.com/klarisaka/HCCA/blob/d337069fa8b81851d2086482992edd560244f4b6/reports/verified50-hcca-v6-vs-dsh-summary.json).
+Both used GXWTF, the `deepseek-v4.1-flash` model alias, and two concurrent tasks. The DSH baseline is reused from its frozen run. Its partial usage record makes token and cost totals lower bounds. Costs use common cache-aware rates. The different reasoning efforts limit attribution to architecture.
+
+These results describe the frozen v7 benchmark runner. HCCA Official 0.2.1 is the current Windows and DSH runtime distribution. [Benchmark details](docs/BENCHMARK-v7-2026-11-12.md) · [Paper](https://github.com/klarisaka/HCCA/blob/5899faf6fefa2babae641d46ada98e8f60aa2670/paper/hcca-v7-2026-11-12/main.pdf).
 
 ## Use with DSH
 
