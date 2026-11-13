@@ -41,8 +41,9 @@ history of a coding agent expensive. HCCA assigns reading and execution work to
 independent worker contexts backed by shared role prompts, with planning and
 integration handled by a parent agent. We report a frozen direct-executor
 configuration on all 50 tasks in a community-selected SWE-bench Verified Mini
-dataset. HCCA v7 resolves 36 tasks, while a reused DeepSeek Harness minimal
-baseline resolves 35. One HCCA task is unfinished and receives zero credit in
+dataset. HCCA v7 with low reasoning effort resolves 36 tasks, while a reused
+DeepSeek Harness minimal high-effort baseline resolves 35. One HCCA task is
+unfinished and receives zero credit in
 the 50-task denominator. HCCA uses \HRequests{} model requests,
 \HInputM{} million input tokens and \HOutputM{} million output tokens, with
 \HCachePct{}\% of input reported as cached. At common off-peak token prices,
@@ -206,7 +207,7 @@ retain each arm's timing and source identities.
 \small
 \begin{tabular}{p{57mm}p{45mm}p{43mm}}
 \toprule
-Setting & HCCA frozen v7 & DSH minimal baseline\\
+Setting & HCCA v7 (low) & DSH minimal high\\
 \midrule
 Provider and model alias & \multicolumn{2}{l}{GXWTF, \texttt{deepseek-v4.1-flash}}\\
 Concurrent tasks & 2 & 2\\
@@ -269,7 +270,7 @@ known-complete cost as a lower bound.
 \small
 \begin{tabular}{lrr}
 \toprule
-Metric & HCCA v7 & DSH minimal high\\
+Metric & HCCA v7 low & DSH minimal high\\
 \midrule
 Resolved / all tasks & 36 / 50 & 35 / 50\\
 Officially evaluated & 49 & 50\\
@@ -286,7 +287,8 @@ Other output tokens & \HOtherOutput{} & \BOtherOutput{}\\
 Normalized cost, USD & \HCost{} & $\geq$\BCost{}\\
 \bottomrule
 \end{tabular}
-\caption{Full-manifest outcomes and usage. DSH token counts and cache share
+\caption{Full-manifest outcomes and usage for HCCA v7 (low) and DSH minimal
+high. DSH token counts and cache share
 refer to its 2,013 complete records. Its remaining partial record is excluded
 from these sums and retains unknown usage. All HCCA usage, including the
 unfinished task, is included.}
@@ -319,7 +321,8 @@ The cached share of recorded input is \HCachePct{}\% for HCCA and
 \begin{figure}[ht]
 \centering
 \input{figures/usage-comparison.tex}
-\caption{Input, output and normalized-cost composition. DSH bars show the
+\caption{Input, output and normalized-cost composition for HCCA v7 (low)
+and DSH minimal high. DSH bars show the
 known-complete usage minimum. Reasoning is already part of output. Input
 categories and output are priced separately using Equation~\ref{eq:cost}.}
 \label{fig:usage}
@@ -437,8 +440,9 @@ the run as 49 evaluated tasks and one unfinished task.
 
 \section{Conclusion}
 
-On the fixed 50-task community Verified Mini manifest, frozen HCCA v7 resolves
-36 tasks at \$\HCost{} normalized cost, including one unfinished task in the
+On the fixed 50-task community Verified Mini manifest, frozen HCCA v7 with low
+reasoning effort resolves 36 tasks at \$\HCost{} normalized cost, including one
+unfinished task in the
 denominator and all consumed usage. The reused DSH minimal high baseline
 resolves 35 tasks with known-complete normalized cost of at least
 \$\BCost{}. HCCA uses fewer requests, smaller average input requests and less

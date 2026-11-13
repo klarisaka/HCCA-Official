@@ -280,13 +280,13 @@
     "files": [
       {
         "filename": "main.pdf",
-        "sha256": "52a8d3cc00a1bb53ed118e7bd5ea1e3d26fcac17e745902e8280c7ee360c20ef",
-        "bytes": 62842
+        "sha256": "60cf3e8478d5bcde07054883ba67bf8ddf7d55ff4dee344ec8b842258ccccaad",
+        "bytes": 62953
       },
       {
         "filename": "main.tex",
-        "sha256": "de82b3caeca63594c88e7c6706e7c2e38de327251a87c18601e31eaa65d9c3d0",
-        "bytes": 24337
+        "sha256": "2eb3b65b0d6ac2b1367fde076fa6d1d59426f74b5d651ad19837d1daaa85be53",
+        "bytes": 24478
       },
       {
         "filename": "metrics.tex",
@@ -295,13 +295,13 @@
       },
       {
         "filename": "figures/usage-comparison.tex",
-        "sha256": "66124417e517ac1e5a9d6be90daabb472548a29c996c5591e43b6af1feae8330",
-        "bytes": 3023
+        "sha256": "bd98901d18206abfdeb9bd4fced18caa49dd1be03365b78828eb7c86a92957d6",
+        "bytes": 3045
       },
       {
         "filename": "ABSTRACT.zh-CN.md",
-        "sha256": "ddef3fb061ce71813c6bbc92f180bf6f73f62857e381a35cf9f921aa069a4e3c",
-        "bytes": 3191
+        "sha256": "8dcb35cc9557e07dc6efeb51f1410ace5c0ce1fee0f43f16f960644171988b44",
+        "bytes": 3204
       }
     ]
   }
