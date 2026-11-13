@@ -30,18 +30,19 @@ flowchart LR
 
 ## 冻结 v7 基准结果
 
-SWE-bench Verified Mini，共 50 题。HCCA 有 49 题取得官方评测结果，1 题未完成，计为未通过。
+SWE-bench Verified Mini，共 50 题。HCCA 有 49 题取得官方评测结果，1 题未完成，计为未通过。两次 DSH 运行均评测了全部 50 题。
 
 | 冻结版本 | 通过题数 | 输入 token | 缓存输入 | 输出 token | 归一费用 |
 | --- | --- | --- | --- | --- | --- |
-| **HCCA v7** · 按角色混合推理 | **36/50（72%）** | **36.811M** | **35.850M** | **0.654M** | **$0.644** |
+| **HCCA v7 · low** | **36/50（72%）** | **36.811M** | **35.850M** | **0.654M** | **$0.644** |
+| DSH 极简 · low | 34/50（68%） | 29.254M | 28.190M | 0.516M | $0.554 |
 | DSH 极简 · high | 35/50（70%） | ≥ 106.265M | ≥ 104.137M | ≥ 4.050M | ≥ $3.062 |
 
-v7 按角色配置混合推理，思考、规划与 Analyst 使用 `high`，执行与阅读使用 `low`。本轮直接执行路径记录了 1,301 次 `low` 请求、0 次 `high` 请求。
+HCCA 本轮实测为 1,301 次 `low`、0 次 `high`。角色策略中，思考、规划与 Analyst 配置 `high`，执行与阅读配置 `low`。
 
-双方均使用 GXWTF、`deepseek-v4.1-flash` 模型别名和 2 题并发。DSH 复用已冻结的基线运行，其一条用量记录不完整，因此 token 总量和费用为下界。费用统一按缓存感知价格归一。推理强度的差异限制了对架构效果的单独归因。
+DSH low 使用 DeepSeek 官方 API、4 题并发。历史 HCCA low 与 DSH high 使用 GXWTF、2 题并发。费用统一按谷价归一。官方 low 运行前的 6 次 GXWTF 失败请求缺少用量，费用未知。
 
-上述结果对应冻结 v7 基准运行器。HCCA Official 0.2.1 是当前的 Windows 与 DSH runtime 发行版。[基准明细](docs/BENCHMARK-v7-2026-11-12.zh-CN.md) · [论文](paper/hcca-v7-2026-11-12/main.pdf)。
+HCCA 比 DSH low 多通过 2 题，归一费用高 16.3%。上述结果对应冻结 v7 基准运行器。HCCA Official 0.2.1 是当前的 Windows 与 DSH runtime 发行版。[基准明细](docs/BENCHMARK-v7-2026-11-13.zh-CN.md) · [论文](paper/hcca-v7-2026-11-13/main.pdf)。
 
 ## 在 DSH 中使用
 

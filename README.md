@@ -30,18 +30,19 @@ Each Executor box represents an independent assignment using the shared role con
 
 ## Frozen v7 benchmark
 
-SWE-bench Verified Mini, 50 tasks. HCCA has 49 official evaluations and one unfinished task counted as unresolved.
+SWE-bench Verified Mini, 50 tasks. HCCA has 49 official evaluations and one unfinished task counted as unresolved. Both DSH runs evaluated all 50 tasks.
 
 | Frozen run | Resolved | Input tokens | Cached input | Output tokens | Normalized cost |
 | --- | --- | --- | --- | --- | --- |
-| **HCCA v7** · mixed by role | **36/50 (72%)** | **36.811M** | **35.850M** | **0.654M** | **$0.644** |
+| **HCCA v7 · low** | **36/50 (72%)** | **36.811M** | **35.850M** | **0.654M** | **$0.644** |
+| DSH minimal · low | 34/50 (68%) | 29.254M | 28.190M | 0.516M | $0.554 |
 | DSH minimal · high | 35/50 (70%) | ≥ 106.265M | ≥ 104.137M | ≥ 4.050M | ≥ $3.062 |
 
-The v7 role policy uses `high` for thinking/planning and analysts, and `low` for execution/reading. This direct-executor run recorded 1,301 `low` requests and zero `high` requests.
+The measured HCCA run recorded 1,301 `low` requests and zero `high` requests. Its role policy configures thinking/planning and analysts at `high`, and execution/reading at `low`.
 
-Both used GXWTF, the `deepseek-v4.1-flash` model alias, and two concurrent tasks. The DSH baseline is reused from its frozen run. Its partial usage record makes token and cost totals lower bounds. Costs use common cache-aware rates. The different reasoning efforts limit attribution to architecture.
+DSH low used DeepSeek official with four concurrent tasks. The historical HCCA low and DSH high runs used GXWTF with two concurrent tasks. All costs use common off-peak token rates. Six failed GXWTF requests before the official low run have unknown usage and cost.
 
-These results describe the frozen v7 benchmark runner. HCCA Official 0.2.1 is the current Windows and DSH runtime distribution. [Benchmark details](docs/BENCHMARK-v7-2026-11-12.md) · [Paper](paper/hcca-v7-2026-11-12/main.pdf).
+HCCA resolves two more tasks than DSH low at 16.3% higher normalized cost. These figures describe the frozen v7 benchmark runner. HCCA Official 0.2.1 packages the current Windows and DSH runtime. [Benchmark details](docs/BENCHMARK-v7-2026-11-13.md) · [Paper](paper/hcca-v7-2026-11-13/main.pdf).
 
 ## Use with DSH
 

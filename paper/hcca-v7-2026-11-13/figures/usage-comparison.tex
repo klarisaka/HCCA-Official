@@ -1,0 +1,51 @@
+\begin{minipage}[t]{.32\linewidth}\centering
+\textbf{\scriptsize Input tokens (millions)}\\[2pt]
+\begin{tikzpicture}\begin{axis}[
+width=.98\linewidth,height=45mm,xbar stacked,bar width=7pt,
+symbolic y coords={DSH high,DSH low,HCCA low},ytick=data,
+ymin={[normalized]-0.6},ymax={[normalized]2.6},xmin=0,xmax=150.9,
+axis lines*=left,axis line style={draw=none},tick style={draw=none},
+tick label style={font=\scriptsize},xmajorgrids,grid style={gray!15},enlarge y limits=false]
+\addplot[fill=accent,draw=none] coordinates {(35.849984,{HCCA low}) (28.189696,{DSH low}) (104.137856,{DSH high})};
+\addplot[fill=cachelight,draw=none] coordinates {(0.960532,{HCCA low}) (1.063901,{DSH low}) (2.127590,{DSH high})};
+\node[anchor=west,font=\scriptsize] at (axis cs:36.810516,HCCA low){36.811};
+\node[anchor=west,font=\scriptsize] at (axis cs:29.253597,DSH low){29.254};
+\node[anchor=west,font=\scriptsize] at (axis cs:106.265446,DSH high){$\geq$106.265};
+\end{axis}\end{tikzpicture}
+{\scriptsize \textcolor{accent}{Cached}\quad \textcolor{cachelight}{Uncached}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.32\linewidth}\centering
+\textbf{\scriptsize Output tokens (millions)}\\[2pt]
+\begin{tikzpicture}\begin{axis}[
+width=.98\linewidth,height=45mm,xbar stacked,bar width=7pt,
+symbolic y coords={DSH high,DSH low,HCCA low},ytick=data,
+ymin={[normalized]-0.6},ymax={[normalized]2.6},xmin=0,xmax=5.7522,
+axis lines*=left,axis line style={draw=none},tick style={draw=none},
+tick label style={font=\scriptsize},xmajorgrids,grid style={gray!15},enlarge y limits=false]
+\addplot[fill=accent,draw=none] coordinates {(0.408903,{HCCA low}) (0.365085,{DSH low}) (3.690753,{DSH high})};
+\addplot[fill=cachelight,draw=none] coordinates {(0.245401,{HCCA low}) (0.151064,{DSH low}) (0.360084,{DSH high})};
+\node[anchor=west,font=\scriptsize] at (axis cs:0.654304,HCCA low){0.654};
+\node[anchor=west,font=\scriptsize] at (axis cs:0.516149,DSH low){0.516};
+\node[anchor=west,font=\scriptsize] at (axis cs:4.050837,DSH high){$\geq$4.051};
+\end{axis}\end{tikzpicture}
+{\scriptsize \textcolor{accent}{Reasoning}\quad \textcolor{cachelight}{Other output}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{.32\linewidth}\centering
+\textbf{\scriptsize Normalized cost (USD)}\\[2pt]
+\begin{tikzpicture}\begin{axis}[
+width=.98\linewidth,height=45mm,xbar stacked,bar width=7pt,
+symbolic y coords={DSH high,DSH low,HCCA low},ytick=data,
+ymin={[normalized]-0.6},ymax={[normalized]2.6},xmin=0,xmax=4.3482,
+axis lines*=left,axis line style={draw=none},tick style={draw=none},
+tick label style={font=\scriptsize},xmajorgrids,grid style={gray!15},enlarge y limits=false]
+\addplot[fill=accent,draw=none] coordinates {(0.107549952,{HCCA low}) (0.084569088,{DSH low}) (0.312413568,{DSH high})};
+\addplot[fill=cachelight,draw=none] coordinates {(0.144079800,{HCCA low}) (0.159585150,{DSH low}) (0.319138500,{DSH high})};
+\addplot[fill=outputgold,draw=none] coordinates {(0.392582400,{HCCA low}) (0.309689400,{DSH low}) (2.430502200,{DSH high})};
+\node[anchor=west,font=\scriptsize] at (axis cs:0.644212152,HCCA low){0.644};
+\node[anchor=west,font=\scriptsize] at (axis cs:0.553843638,DSH low){0.554};
+\node[anchor=west,font=\scriptsize] at (axis cs:3.062054268,DSH high){$\geq$3.062};
+\end{axis}\end{tikzpicture}
+{\scriptsize \textcolor{accent}{Cached input}\quad \textcolor{cachelight}{Uncached input}\quad \textcolor{outputgold}{Output}}
+\end{minipage}
