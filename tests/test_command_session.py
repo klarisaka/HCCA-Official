@@ -209,13 +209,35 @@ def process_is_running(pid: int) -> bool:
         finally:
             kernel.CloseHandle(handle)
     stat = Path(f"/proc/{pid}/stat")
-    if stat.exists() and stat.read_text().split(") ", 1)[1].startswith("Z"):
-        return False
+    try:
+        if stat.read_text().split(") ", 1)[1].startswith("Z"):
+            return False
+    except (FileNotFoundError, ProcessLookupError):
+        pass
     try:
         os.kill(pid, 0)
         return True
     except ProcessLookupError:
         return False
+
+
+@pytest.mark.skipif(POWERSHELL, reason="POSIX process-status observation")
+@pytest.mark.parametrize("stat_error", [FileNotFoundError, ProcessLookupError])
+@pytest.mark.parametrize("running", [False, True])
+def test_process_status_handles_disappearing_proc_entry(
+    monkeypatch: pytest.MonkeyPatch, stat_error: type[OSError], running: bool,
+) -> None:
+    def read_stat(path: Path) -> str:
+        raise stat_error("process disappeared while reading its status")
+
+    def check_process(pid: int, signal: int) -> None:
+        assert (pid, signal) == (12345, 0)
+        if not running:
+            raise ProcessLookupError("process exited")
+
+    monkeypatch.setattr(Path, "read_text", read_stat)
+    monkeypatch.setattr(os, "kill", check_process)
+    assert process_is_running(12345) is running
 
 
 def assert_process_stops(pid: int) -> None:
