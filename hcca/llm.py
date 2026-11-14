@@ -1389,6 +1389,7 @@ class OpenAICompatLLM:
 
         try:
             diagnostics["effective_socket_timeout"] = read_timeout()
+            require_stream_done = False
             with urllib.request.urlopen(
                 request, timeout=diagnostics["effective_socket_timeout"], context=context
             ) as response:
@@ -1398,6 +1399,10 @@ class OpenAICompatLLM:
                         headers.get("x-request-id") or headers.get("request-id") or ""
                     )[:64]
                     diagnostics["content_type"] = str(headers.get("Content-Type") or "")[:128]
+                    require_stream_done = (
+                        str(headers.get("X-HCCA-Require-Stream-Done") or "").strip() == "1"
+                        and diagnostics["content_type"].split(";", 1)[0].strip().lower() == "text/event-stream"
+                    )
                 for payload, data_lines in payloads(response):
                     now = time.time()
                     if not payload.strip():
@@ -1519,6 +1524,8 @@ class OpenAICompatLLM:
                         except Exception:
                             pass
             if diagnostics["termination"] == "in_progress":
+                if require_stream_done:
+                    raise ModelError("LLM event stream ended before [DONE]")
                 diagnostics["termination"] = "eof"
         except ModelError as exc:
             stream_error(exc)
