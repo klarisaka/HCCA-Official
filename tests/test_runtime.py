@@ -126,4 +126,4 @@ def test_dsh_installer_dry_run_preserves_profile(tmp_path):
     assert result.returncode == 0, result.stderr
     assert "0.2.1" in result.stdout
     assert not profile.exists()
-    assert hcca.__version__ == "0.2.1"
+    assert hcca.__version__ == "0.2.2"

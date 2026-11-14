@@ -2,7 +2,7 @@
 
 # HCCA Official
 
-HCCA Official 0.2.1 gives reading, execution, and retries their own contexts. Keep the main agent's input small and reuse stable prompt prefixes.
+HCCA Official 0.2.2 gives reading, execution, and retries their own contexts. Keep the main agent's input small and reuse stable prompt prefixes.
 
 ## How it works
 
@@ -42,7 +42,7 @@ The measured HCCA run recorded 1,301 `low` requests and zero `high` requests. It
 
 DSH low used DeepSeek official with four concurrent tasks. The historical HCCA low and DSH high runs used GXWTF with two concurrent tasks. All costs use common off-peak token rates. Six failed GXWTF requests before the official low run have unknown usage and cost.
 
-HCCA resolves two more tasks than DSH low at 16.3% higher normalized cost. These figures describe the frozen v7 benchmark runner. HCCA Official 0.2.1 packages the current Windows and DSH runtime. [Benchmark details](docs/BENCHMARK-v7-2026-11-13.md) · [Paper](paper/hcca-v7-2026-11-13/main.pdf).
+HCCA resolves two more tasks than DSH low at 16.3% higher normalized cost. These figures describe the frozen v7 benchmark runner. HCCA Official 0.2.2 packages the current Windows and DSH runtime. [Benchmark details](docs/BENCHMARK-v7-2026-11-13.md) · [Paper](paper/hcca-v7-2026-11-13/main.pdf).
 
 ## Use with DSH
 

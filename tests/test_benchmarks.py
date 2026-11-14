@@ -76,9 +76,9 @@ def test_adapter_runs_prepared_task_and_writes_prediction(workspace, tmp_path, m
     assert returncode == 0 and len(invoked) == 1
     assert "--no-web" in invoked[0]
     assert "--max-output-tokens" not in invoked[0]
-    assert swe_mini.PREDICTION_FILENAME == "prediction-hcca-v0.2.1.jsonl"
+    assert swe_mini.PREDICTION_FILENAME == "prediction-hcca-v0.2.2.jsonl"
     prediction = json.loads((output / swe_mini.PREDICTION_FILENAME).read_text(encoding="utf-8"))
     assert prediction["instance_id"] == task["instance_id"]
     assert "+answer = 42" in prediction["model_patch"]
     status = json.loads((output / swe_mini.STATUS_FILENAME).read_text(encoding="utf-8"))
-    assert status["hcca_version"] == "0.2.1"
+    assert status["hcca_version"] == "0.2.2"

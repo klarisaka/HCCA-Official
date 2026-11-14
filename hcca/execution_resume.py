@@ -16,6 +16,14 @@ CONTINUE_INSTRUCTION = (
     "旧受限终态不代表本次任务已完成。现在可继续使用工具修复源码并验证原任务；"
     "在剩余时间内完成实际工作后再提交报告。旧容器临时文件和进程未恢复。"
 )
+SHELL_RESTART_INSTRUCTION = (
+    "The persistent shell has restarted in the workspace directory. Its previous "
+    "working directory, environment variables, and activated environments were not "
+    "restored. Restore any required directory and environment before running commands."
+)
+SHELL_RESTART_FEEDBACK = (
+    "ERROR: Shell restarted; this tool was not executed; restore cwd/environment and retry."
+)
 TOOL_UNAVAILABLE_ERROR = "ERROR: ValueError: tool is unavailable for this job"
 TOOL_SELECTION_ERRORS = {
     TOOL_UNAVAILABLE_ERROR,
@@ -24,7 +32,19 @@ TOOL_SELECTION_ERRORS = {
     "ERROR: ValueError: path escapes the workspace",
     "ERROR: ValueError: write_file is restricted to the named fix scope",
     "ERROR: ValueError: write_file is disabled for this job",
+    "ERROR: ValueError: edit_file is restricted to the named fix scope",
+    "ERROR: ValueError: edit_file is disabled for this job",
 }
+
+
+def command_exit_code(result: str, command: str | None = None) -> int | None:
+    """Read the status header without interpreting command text or stdout."""
+    if command is not None:
+        header = f"命令：{command.strip()}\n"
+        if result.startswith(header):
+            result = result[len(header):]
+    status = re.match(r"\A退出码[：:][ \t]*(-?\d+)(?:\s|$)", result)
+    return int(status.group(1)) if status else None
 
 
 def update_tool_errors(
@@ -57,25 +77,35 @@ def _native_tool_records(state: dict[str, Any]) -> list[dict[str, Any]]:
     if exchanges:
         messages.append({"role": "assistant", "tool_calls": [pair[0] for pair in exchanges]})
         messages.extend(pair[1] for pair in exchanges)
-    names: dict[str, str] = {}
+    calls: dict[str, dict[str, Any]] = {}
     records = []
     for message in messages:
         if message.get("role") == "assistant":
             for call in message.get("tool_calls") or []:
-                names[str(call.get("id"))] = str(call.get("function", {}).get("name", ""))
+                calls[str(call.get("id"))] = call.get("function", {})
         elif message.get("role") == "tool":
-            name = names.get(str(message.get("tool_call_id")))
+            function = calls.get(str(message.get("tool_call_id")), {})
+            name = str(function.get("name", ""))
             if not name or name == "submit_report":
                 continue
             result = str(message.get("content", ""))
+            if result == SHELL_RESTART_FEEDBACK:
+                continue
             command = re.match(r"command_id=(\d+)\n", result)
             command_id = int(command.group(1)) if command else None
             if command:
                 result = result[command.end():]
             ok = not result.startswith("ERROR:")
             if name == "run_command":
-                exit_code = re.search(r"(?:^|\n)退出码[：:]\s*(-?\d+)(?:\s|$)", result)
-                ok = ok and command_id is not None and exit_code is not None and int(exit_code.group(1)) == 0
+                arguments = function.get("arguments") or {}
+                if isinstance(arguments, str):
+                    try:
+                        arguments = json.loads(arguments)
+                    except (TypeError, ValueError):
+                        arguments = {}
+                source = arguments.get("command") if isinstance(arguments, dict) else None
+                exit_code = command_exit_code(result, source if isinstance(source, str) else None)
+                ok = ok and command_id is not None and exit_code == 0
             records.append({"event": "tool", "tool": name, "ok": ok,
                             "command_id": command_id, "result": result})
     return records
@@ -132,6 +162,30 @@ def native_assistant(response: dict[str, Any]) -> dict[str, Any]:
     if isinstance(response.get("reasoning_content"), str):
         message["reasoning_content"] = response["reasoning_content"]
     return message
+
+
+def _restart_minimal_shell(state: dict[str, Any]) -> None:
+    """Return unfinished native calls to the model after shell state is lost."""
+    response = state.get("pending_response")
+    calls = (response or {}).get("tool_calls") or []
+    if not calls or (len(calls) == 1 and calls[0].get("name") == "submit_report"):
+        return
+    next_index = state.get("next_tool_index", 0)
+    exchanges = state.get("exchanges") or []
+    if type(next_index) is not int or not 0 <= next_index <= len(calls) or len(exchanges) != next_index:
+        raise ValueError("cannot resume: pending tool outcomes are incomplete")
+    assistant = native_assistant(response)
+    messages = []
+    for index, native in enumerate(assistant["tool_calls"]):
+        if index < next_index:
+            saved_call, saved_result = exchanges[index]
+            assistant["tool_calls"][index] = copy.deepcopy(saved_call)
+            messages.append(copy.deepcopy(saved_result))
+        else:
+            messages.append({"role": "tool", "tool_call_id": native["id"], "content": SHELL_RESTART_FEEDBACK})
+    state["history"].extend([assistant, *messages])
+    state.update(pending_response=None, inflight_tool=None, exchanges=[], next_tool_index=0,
+                 next_round_index=state["next_round_index"] + 1, phase="ready")
 
 
 def _ledger(records: list[dict[str, Any]]) -> dict[str, Any]:
@@ -270,8 +324,8 @@ def load_execution_resume(path: str | Path) -> dict[str, Any]:
                 result = str(event.get("result", ""))
                 header = "命令：" + command + "\n"
                 body = result[len(header):] if result.startswith(header) else result
-                exit_code = re.search(r"退出码[：:]\s*(-?\d+)", body)
-                code = exit_code.group(1) if exit_code else "未记录"
+                exit_code = command_exit_code(result, command)
+                code = str(exit_code) if exit_code is not None else "未记录"
                 if len(command) <= 240 and "\n" not in command and " -c " not in command and "<<" not in command:
                     fact = f"command_id={event['command_id']} 原命令：{command}；退出码{code}。"
                 else:
@@ -306,6 +360,8 @@ def load_execution_resume(path: str | Path) -> dict[str, Any]:
         raise ValueError("unsupported execution checkpoint")
     _restore_tool_selection_errors(state, checkpoint_records)
     expire_final_control(state)
+    if state.get("tool_profile") == "minimal":
+        _restart_minimal_shell(state)
     state["provenance"] = {
         "source_path": str(path), "source_sha256": hashlib.sha256(raw).hexdigest(),
         "source_request_count": state.get("previous_model_requests"),
@@ -317,7 +373,11 @@ def load_execution_resume(path: str | Path) -> dict[str, Any]:
     }
     if state.get("pending_response") is None:
         content = CONTINUE_INSTRUCTION
+        if state.get("tool_profile") == "minimal":
+            content += "\n" + SHELL_RESTART_INSTRUCTION
         if continuation_facts:
             content += "\n原历史已裁掉但完成判定仍保留的失败事实（仅补此次续行缺项）：\n" + "\n".join(continuation_facts)
         state["history"].append({"role": "user", "content": content})
+    elif state.get("tool_profile") == "minimal":
+        state["history"].append({"role": "user", "content": SHELL_RESTART_INSTRUCTION})
     return state

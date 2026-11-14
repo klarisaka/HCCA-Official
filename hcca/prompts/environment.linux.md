@@ -1,6 +1,6 @@
 # Linux execution
 
-Commands use `/bin/bash -o pipefail -c`. Set variables with `export NAME='value'`,
+Commands use `/bin/bash` with `pipefail`. Set variables with `export NAME='value'`,
 activate with `. path/to/activate`. Pipelines return the rightmost failing
 command's status, including checks piped through tail/grep. Quote paths and use
 quoted heredoc delimiters for literal scripts.

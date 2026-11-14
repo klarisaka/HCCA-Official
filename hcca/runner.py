@@ -834,7 +834,7 @@ class GenericRun:
         tools = [
             tool for tool in self.toolbox.schemas()
             if tool["function"]["name"] not in {
-                "write_file", "run_command", "read_file", "list_files", "search_files",
+                "write_file", "edit_file", "run_command", "read_file", "list_files", "search_files",
                 "read_execution_log",
             }
         ]

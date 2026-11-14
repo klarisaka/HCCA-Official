@@ -18,7 +18,9 @@ def environment_prompt_path() -> Path:
     return home / f"environment.{platform_name}.md"
 
 
-def execution_environment(workspace: Path | str | None = None) -> dict[str, Any]:
+def execution_environment(
+    workspace: Path | str | None = None, *, persistent_commands: bool = False,
+) -> dict[str, Any]:
     source = environment_prompt_path()
     if not source.is_file():
         source = Path(__file__).with_name("prompts") / source.name
@@ -40,6 +42,8 @@ def execution_environment(workspace: Path | str | None = None) -> dict[str, Any]
         "variables": variables,
         "notes": source.read_text(encoding="utf-8").strip(),
     }
+    if persistent_commands:
+        facts["shell_state"] = "Current directory and environment persist within this worker. Timeout or restart resets them."
     if workspace is not None:
         root = Path(workspace).resolve()
         files: dict[str, Path] = {}

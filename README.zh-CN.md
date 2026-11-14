@@ -2,7 +2,7 @@
 
 # HCCA Official
 
-HCCA Official 0.2.1 把阅读、执行和重试放进独立上下文，减少主 Agent 的输入，并复用稳定的提示词前缀。
+HCCA Official 0.2.2 把阅读、执行和重试放进独立上下文，减少主 Agent 的输入，并复用稳定的提示词前缀。
 
 ## 如何工作
 
@@ -42,7 +42,7 @@ HCCA 本轮实测为 1,301 次 `low`、0 次 `high`。角色策略中，思考�
 
 DSH low 使用 DeepSeek 官方 API、4 题并发。历史 HCCA low 与 DSH high 使用 GXWTF、2 题并发。费用统一按谷价归一。官方 low 运行前的 6 次 GXWTF 失败请求缺少用量，费用未知。
 
-HCCA 比 DSH low 多通过 2 题，归一费用高 16.3%。上述结果对应冻结 v7 基准运行器。HCCA Official 0.2.1 是当前的 Windows 与 DSH runtime 发行版。[基准明细](docs/BENCHMARK-v7-2026-11-13.zh-CN.md) · [论文](paper/hcca-v7-2026-11-13/main.pdf)。
+HCCA 比 DSH low 多通过 2 题，归一费用高 16.3%。上述结果对应冻结 v7 基准运行器。HCCA Official 0.2.2 是当前的 Windows 与 DSH runtime 发行版。[基准明细](docs/BENCHMARK-v7-2026-11-13.zh-CN.md) · [论文](paper/hcca-v7-2026-11-13/main.pdf)。
 
 ## 在 DSH 中使用
 

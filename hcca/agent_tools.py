@@ -32,8 +32,10 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any, Mapping, Sequence
+from uuid import uuid4
 
 from .errors import ToolError
+from .file_edits import edit_file
 
 __all__ = ["AgentToolbox", "TOOL_NAMES"]
 
@@ -42,6 +44,7 @@ TOOL_NAMES = (
     "web_fetch",
     "read_file",
     "write_file",
+    "edit_file",
     "list_files",
     "search_files",
     "run_command",
@@ -179,6 +182,8 @@ class AgentToolbox:
         max_chars: int = 6000,
         allow_web: bool = True,
         allow_run: bool = True,
+        persistent_commands: bool = False,
+        command_output_dir: Path | str | None = None,
     ) -> None:
         self.workspace = Path(workspace).resolve()
         if not self.workspace.is_dir():
@@ -187,12 +192,15 @@ class AgentToolbox:
         self.max_chars = int(max_chars)
         self.allow_web = bool(allow_web)
         self.allow_run = bool(allow_run)
+        self.persistent_commands = bool(persistent_commands)
+        self.command_output_dir = Path(command_output_dir).resolve() if command_output_dir is not None else None
+        self._command_session: Any = None
         #: Per-call audit log (name, ok, chars, duration) used by status.json.
         self.log: list[dict[str, Any]] = []
         self._counts: dict[str, int] = {name: 0 for name in TOOL_NAMES}
 
     # -- schemas -----------------------------------------------------------
-    def schemas(self) -> list[dict[str, Any]]:
+    def schemas(self, *, minimal: bool = False, allow_write: bool = True) -> list[dict[str, Any]]:
         """OpenAI-style function schemas, restricted to the enabled tools."""
         tools = [
             self._fn(
@@ -241,6 +249,12 @@ class AgentToolbox:
                 ["path", "content"],
             ),
             self._fn(
+                "edit_file",
+                "Replace one exact, unique text match in a workspace file. Preserve its encoding and line endings.",
+                {"path": {"type": "string"}, "old": {"type": "string"}, "new": {"type": "string"}},
+                ["path", "old", "new"],
+            ),
+            self._fn(
                 "list_files",
                 "列出工作区内某个目录的文件与子目录。",
                 {
@@ -285,7 +299,33 @@ class AgentToolbox:
             tools = [tool for tool in tools if tool["function"]["name"] not in ("web_search", "web_fetch")]
         if not self.allow_run:
             tools = [tool for tool in tools if tool["function"]["name"] != "run_command"]
+        if minimal:
+            names = {"run_command", "edit_file"} if allow_write else {"run_command"}
+            tools = [tool for tool in tools if tool["function"]["name"] in names]
+            for tool in tools:
+                if tool["function"]["name"] == "run_command":
+                    state = "Current directory and environment persist for this task. " if self.persistent_commands else ""
+                    tool["function"].update(
+                        description="Run shell commands. " + state + "Use shell commands to inspect files and batch related operations.",
+                        parameters={"type": "object", "properties": {
+                                        "command": {"type": "string"},
+                                        "timeout_seconds": {"type": "integer", "description": "Optional timeout, up to 300 seconds."},
+                                    },
+                                    "required": ["command"], "additionalProperties": False},
+                    )
+            tools.sort(key=lambda tool: tool["function"]["name"] != "run_command")
         return tools
+
+    def close(self) -> None:
+        if self._command_session is not None:
+            self._command_session.close()
+            self._command_session = None
+
+    def __enter__(self) -> AgentToolbox:
+        return self
+
+    def __exit__(self, *_exc: Any) -> None:
+        self.close()
 
     @staticmethod
     def _fn(
@@ -338,7 +378,7 @@ class AgentToolbox:
                 "args": _summarise_args(args),
             }
         )
-        return result[: self.max_chars * 2]
+        return result if name == "run_command" else result[: self.max_chars * 2]
 
     # -- web ---------------------------------------------------------------
     def _backends(self, query: str) -> list[Any]:
@@ -545,6 +585,10 @@ class AgentToolbox:
             f"（{len(content)} 字符 / {path.stat().st_size} 字节）"
         )
 
+    def _tool_edit_file(self, args: Mapping[str, Any]) -> str:
+        path = self._resolve(str(args.get("path") or ""))
+        return edit_file(path, args.get("old"), args.get("new"))
+
     def _tool_list_files(self, args: Mapping[str, Any]) -> str:
         path = self._resolve(str(args.get("path") or "."))
         if not path.is_dir():
@@ -676,6 +720,19 @@ class AgentToolbox:
         if not command:
             raise ToolError("command is required")
         timeout = max(1, min(300, _as_int(args.get("timeout_seconds"), int(self.timeout))))
+        output_path = None
+        if self.command_output_dir is not None:
+            self.command_output_dir.mkdir(parents=True, exist_ok=True)
+            output_path = self.command_output_dir / f"{uuid4().hex}.log"
+        if self.persistent_commands:
+            from .command_session import CommandSession
+
+            if self._command_session is None:
+                self._command_session = CommandSession(self.workspace)
+            result = self._command_session.run(command, timeout=timeout, output_path=output_path)
+            status = (f"命令超时（{timeout}s）" if result.timed_out else f"退出码：{result.exit_code}")
+            notice = "\nShell restarted; current directory and environment were reset." if result.session_reset else ""
+            return self._command_output(status, result.output, result.elapsed, output_path) + notice
         if sys.platform == "win32":
             workspace_literal = str(self.workspace).replace("'", "''")
             # PowerShell's startup location can fall back to System32 when the
@@ -728,15 +785,17 @@ class AgentToolbox:
                 encoding = "oem" if sys.platform == "win32" else "utf-8"
                 output = raw_output.decode(encoding, "replace")
         elapsed = time.time() - started
+        if output_path is not None:
+            output_path.write_bytes(output.encode("utf-8"))
         if timed_out:
-            return (
-                f"命令超时（{timeout}s，已结束整个进程树）：{command}\n"
-                f"部分输出（尾部）：\n{_tail(output, self.max_chars)}"
-            )
-        return (
-            f"命令：{command}\n退出码：{proc.returncode}  用时：{elapsed:.1f}s\n"
-            f"输出（尾部）：\n{_tail(output, self.max_chars)}"
-        )
+            return self._command_output(f"命令超时（{timeout}s，已结束整个进程树）", output, elapsed, output_path)
+        return self._command_output(f"退出码：{proc.returncode}", output, elapsed, output_path)
+
+    def _command_output(self, status: str, output: str, elapsed: float, output_path: Path | None) -> str:
+        result = f"{status}  用时：{elapsed:.1f}s\n输出（尾部）：\n{_tail(output, self.max_chars)}"
+        if output_path is not None and len(output) > self.max_chars:
+            result += f"\nFull output: {output_path}"
+        return result
 
     # -- stats -------------------------------------------------------------
     def stats(self) -> dict[str, Any]:

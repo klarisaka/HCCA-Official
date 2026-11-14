@@ -2,7 +2,7 @@ English | [简体中文](USAGE.zh-CN.md) · [Project home](../README.md)
 
 # Usage and configuration
 
-This guide covers HCCA Official 0.2.1.
+This guide covers HCCA Official 0.2.2.
 
 ## Choose an entry point
 
@@ -91,6 +91,8 @@ Visit the [local dashboard](http://127.0.0.1:8765/). The Python runtime uses the
 | Shared request budget | No fixed call limit | Root defaults to 40 calls, analyst to 16 |
 
 The standalone `--unlimited-executor-rounds` option supports direct code execution and requires a verifiable Git workspace and a positive `--max-wall-seconds` value. When a DSH worker is already writing to the same workspace, the sidecar returns a conflict so Root can adjust the order of tasks.
+
+Executor workers use `run_command`, `edit_file` and `submit_report`. Command and test jobs expose command execution and reporting. Each worker owns a persistent Bash or PowerShell session, including its working directory and environment. `edit_file` replaces one unique text match while preserving encoding and line endings. Long command output is saved under `executions/<job_id>.commands/` and can be read with `read_execution_log` using `output_file`. A timeout or continuation starts a fresh shell and reports the reset.
 
 ## Guide a running task
 

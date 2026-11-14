@@ -15,8 +15,9 @@ from typing import Any
 from uuid import uuid4
 
 from .agent_tools import AgentToolbox
+from .errors import ToolError
 from .execution_environment import execution_environment
-from .execution_resume import TOOL_SELECTION_ERRORS, load_execution_resume, native_assistant, update_tool_errors
+from .execution_resume import TOOL_SELECTION_ERRORS, command_exit_code, load_execution_resume, native_assistant, update_tool_errors
 from .reporting import REPORT_FINAL_INSTRUCTION, REPORT_TOOL_CHOICE, report_schema, submitted_report
 from .request_budget import BudgetExceeded, CallBudget
 from .tokens import estimate_tokens
@@ -105,12 +106,13 @@ class ExecutionService:
     def log_schema() -> dict[str, Any]:
         return AgentToolbox._fn(
             "read_execution_log",
-            "Read a bounded line range from a known execution job's tool transcript.",
+            "Read a known execution transcript or a saved command output file.",
             {
                 "job_id": {"type": "string"},
                 "start_line": {"type": "integer", "minimum": 1},
                 "end_line": {"type": "integer", "minimum": 1},
                 "char_offset": {"type": "integer", "minimum": 0},
+                "output_file": {"type": "string", "description": "Optional saved command output filename."},
             },
             ["job_id"],
         )
@@ -131,8 +133,21 @@ class ExecutionService:
         last_line = start - 1
         next_line: int | None = None
         next_offset: int | None = None
+        path = Path(job["log_path"])
+        output_file = arguments.get("output_file")
+        if output_file is not None:
+            if not isinstance(output_file, str) or not re.fullmatch(r"[a-f0-9]{32}\.log", output_file):
+                return "ERROR: invalid command output filename"
+            log_root = path.parent.resolve()
+            expected_directory = log_root / f"{job['job_id']}.commands"
+            directory = expected_directory.resolve()
+            if directory != expected_directory:
+                return "ERROR: command output escapes its job"
+            path = (directory / output_file).resolve()
+            if not path.is_relative_to(directory.resolve()):
+                return "ERROR: command output escapes its job"
         try:
-            with Path(job["log_path"]).open(encoding="utf-8") as log:
+            with path.open(encoding="utf-8") as log:
                 for number, line in enumerate(log, 1):
                     if number < start:
                         continue
@@ -193,7 +208,7 @@ class ExecutionService:
         if mode == "fix" and not normalized:
             raise ValueError("fix jobs require at least one named file or existing directory")
         return {
-            "environment": execution_environment(workspace=self.workspace),
+            "environment": execution_environment(workspace=self.workspace, persistent_commands=True),
             "workspace": str(self.workspace),
             "mode": mode,
             "paths": normalized,
@@ -268,6 +283,10 @@ class ExecutionService:
                                 raise ValueError("resume workspace differs from the original workspace")
                             if original.get("task") != envelope["task"] or original.get("paths") != envelope["paths"]:
                                 raise ValueError("resume task or file scope differs from the original execution")
+                            if original.get("mode") != envelope["mode"]:
+                                raise ValueError("resume mode differs from the original execution")
+                            if original.get("mode") == "fix" and not allow_write:
+                                raise ValueError("fix jobs are disabled for a read-only requester")
                             envelope = original
                     except (ValueError, TypeError) as exc:
                         status, summary = "blocked", str(exc)
@@ -352,6 +371,35 @@ class ExecutionService:
     ) -> tuple[str, str]:
         if self.max_rounds == 0 and (budget is None or budget.deadline is None):
             raise ValueError("unlimited execution requires an explicit wall deadline")
+        profile = resume_state.get("tool_profile", "legacy") if resume_state is not None else "minimal"
+        with AgentToolbox(
+            self.workspace,
+            timeout=self.toolbox.timeout,
+            max_chars=self.toolbox.max_chars,
+            allow_web=False,
+            allow_run=self.toolbox.allow_run,
+            persistent_commands=profile == "minimal",
+            command_output_dir=self.out_dir / "executions" / f"{job_id}.commands",
+        ) as worker:
+            return self._work_with_tools(
+                envelope, agent_id, job_id, record, budget, worker=worker, tool_profile=profile,
+                resume_state=resume_state, workspace_before=workspace_before, planning=planning,
+            )
+
+    def _work_with_tools(
+        self,
+        envelope: dict[str, Any],
+        agent_id: str,
+        job_id: str,
+        record: Callable[..., None],
+        budget: CallBudget | None,
+        *,
+        worker: AgentToolbox,
+        tool_profile: str,
+        resume_state: dict[str, Any] | None,
+        workspace_before: dict[str, Any] | None,
+        planning: dict[str, Any] | None,
+    ) -> tuple[str, str]:
         prompt_path = executor_prompt_path()
         source = prompt_path if prompt_path.is_file() else _BUNDLED_PROMPT
         prompt = source.read_text(encoding="utf-8").strip()
@@ -360,17 +408,16 @@ class ExecutionService:
             {"role": "system", "content": prompt},
             {"role": "user", "content": json.dumps(envelope, ensure_ascii=False)},
         ]
-        worker = AgentToolbox(
-            self.workspace,
-            timeout=self.toolbox.timeout,
-            max_chars=self.toolbox.max_chars,
-            allow_web=self.toolbox.allow_web,
-            allow_run=self.toolbox.allow_run,
-        )
         write_allowed = envelope["allow_write"] and envelope["mode"] == "fix"
-        tools = [tool for tool in worker.schemas() if tool["function"]["name"] not in ("web_search", "web_fetch")]
+        tools = worker.schemas(minimal=tool_profile == "minimal", allow_write=write_allowed)
+        if tool_profile == "legacy":
+            tools = [tool for tool in tools if tool["function"]["name"] != "edit_file"]
         tools.append(report_schema(execution=True))
-        allowed_tools = {tool["function"]["name"] for tool in tools}
+        if resume_state is not None and isinstance(resume_state.get("tool_schemas"), list):
+            tools = resume_state["tool_schemas"]
+        # Existing checkpoints and scripted callers can still use the native
+        # workspace APIs. Fresh model requests receive the compact toolset.
+        allowed_tools = {tool["function"]["name"] for tool in worker.schemas()} | {"submit_report"}
         write_paths = {self._path(path) for path in envelope["paths"]}
         write_directories = {path for path in write_paths if path.is_dir()}
         history: list[dict[str, Any]] = []
@@ -408,6 +455,7 @@ class ExecutionService:
         def checkpoint(phase: str, inflight_tool: str | None = None) -> None:
             state = {
                 "schema": "hcca.execution.checkpoint.v1", "phase": phase,
+                "tool_profile": tool_profile, "tool_schemas": tools,
                 "envelope": envelope, "initial": initial, "history": history,
                 "next_round_index": round_index, "pending_response": pending_response,
                 "next_tool_index": next_tool_index, "exchanges": exchanges,
@@ -604,12 +652,15 @@ class ExecutionService:
                         raise ValueError("tool arguments must be an object")
                     if name not in allowed_tools:
                         raise ValueError("tool is unavailable for this job")
-                    if name == "write_file" and not write_allowed:
-                        raise ValueError("write_file is disabled for this job")
-                    if name == "write_file":
-                        target = self._path(str(args.get("path", "")))
+                    if name in ("write_file", "edit_file") and not write_allowed:
+                        raise ValueError(f"{name} is disabled for this job")
+                    if name in ("write_file", "edit_file"):
+                        try:
+                            target = worker._resolve(str(args.get("path", "")))
+                        except ToolError as exc:
+                            raise ValueError("path escapes the workspace") from exc
                         if target not in write_paths and not any(target.is_relative_to(path) for path in write_directories):
-                            raise ValueError("write_file is restricted to the named fix scope")
+                            raise ValueError(f"{name} is restricted to the named fix scope")
                     if name == "run_command":
                         remaining_time = budget.remaining_time if budget is not None else None
                         if remaining_time is not None:
@@ -633,10 +684,7 @@ class ExecutionService:
                     ok = ok and worker.log[-1]["ok"]
                 if name == "run_command" and command_id is not None:
                     command = str(args.get("command") or "").strip() if isinstance(args, Mapping) else ""
-                    command_header = f"命令：{command}\n"
-                    status_text = result[len(command_header):] if command_header and result.startswith(command_header) else result
-                    exit_code = re.match(r"退出码[：:]\s*(-?\d+)(?:\s|$)", status_text)
-                    ok = ok and exit_code is not None and int(exit_code.group(1)) == 0
+                    ok = ok and command_exit_code(result, command) == 0
                     command_results[command_id] = bool(ok)
                     last_command_ok = bool(ok)
                     failed_commands.pop(command, None)

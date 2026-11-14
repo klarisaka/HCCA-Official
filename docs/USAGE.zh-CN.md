@@ -2,7 +2,7 @@
 
 # 使用与配置
 
-本文适用于 HCCA Official 0.2.1。
+本文适用于 HCCA Official 0.2.2。
 
 ## 选择入口
 
@@ -91,6 +91,8 @@ python -m hcca.dsh_worker --runs "./runs" --port 8765
 | 共享请求池 | 无固定次数墙 | Root 默认 40 次，analyst 默认 16 次 |
 
 独立入口的 `--unlimited-executor-rounds` 用于代码直执行，需要可验证的 Git 工作区和正数 `--max-wall-seconds`。DSH 在同一工作区已有写入任务时会向 Root 返回冲突，由 Root 调整派发顺序。
+
+执行 worker 使用 `run_command`、`edit_file` 和 `submit_report`，命令与测试任务提供命令执行和结果提交。每个 worker 独享持久 Bash 或 PowerShell 会话，保留工作目录和环境变量。`edit_file` 精确替换一处唯一匹配，保留编码与换行。长命令输出保存在 `executions/<job_id>.commands/`，可通过 `read_execution_log` 的 `output_file` 参数读取。超时或续行会启动新 shell，并回传重置信息。
 
 ## 执行中补充要求
 

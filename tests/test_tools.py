@@ -23,6 +23,7 @@ def test_schemas_expose_expected_tools(workspace: Path) -> None:
         "web_fetch",
         "read_file",
         "write_file",
+        "edit_file",
         "list_files",
         "search_files",
         "run_command",
